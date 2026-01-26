@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Claims Text-to-SQL Agent - Architecture</title>
+  
+  <!-- Required: Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ============================================
+       CSS VARIABLES (Design Tokens)
+       ============================================ */
+    :root {
+      /* Colors - Neutrals */
+      --color-bg: #fafafa;
+      --color-surface: #ffffff;
+      --color-surface-secondary: #f5f5f5;
+      --color-border: #e5e5e5;
+      --color-border-subtle: #f0f0f0;
+      
+      /* Colors - Text */
+      --color-text-primary: #0a0a0a;
+      --color-text-secondary: #525252;
+      --color-text-muted: #737373;
+      --color-text-faint: #a3a3a3;
+      
+      /* Colors - Semantic (use sparingly) */
+      --color-success: #22c55e;
+      --color-warning: #f59e0b;
+      --color-error: #ef4444;
+      --color-info: #3b82f6;
+      
+      /* Typography */
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
+      
+      /* Font Sizes */
+      --text-xs: 10px;
+      --text-sm: 11px;
+      --text-base: 12px;
+      --text-md: 14px;
+      --text-lg: 15px;
+      --text-xl: 16px;
+      --text-2xl: 24px;
+      --text-3xl: 32px;
+      
+      /* Font Weights */
+      --font-normal: 400;
+      --font-medium: 500;
+      --font-semibold: 600;
+      
+      /* Spacing */
+      --space-1: 4px;
+      --space-2: 6px;
+      --space-3: 8px;
+      --space-4: 12px;
+      --space-5: 14px;
+      --space-6: 16px;
+      --space-7: 20px;
+      --space-8: 24px;
+      --space-9: 28px;
+      --space-10: 32px;
+      --space-12: 40px;
+      --space-14: 56px;
+      --space-16: 64px;
+      
+      /* Border Radius */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      
+      /* Shadows (minimal use) */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      
+      /* Layout */
+      --max-width: 900px;
+    }
+
+    /* ============================================
+       BASE STYLES
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--color-bg);
+      padding: var(--space-16) var(--space-10);
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* ============================================
+       TYPOGRAPHY
+       ============================================ */
+    .title-section {
+      margin-bottom: var(--space-14);
+    }
+
+    .main-title {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-semibold);
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-3);
+      color: var(--color-text-primary);
+    }
+
+    .subtitle {
+      font-size: var(--text-lg);
+      color: var(--color-text-muted);
+      font-weight: var(--font-normal);
+    }
+
+    .phase-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.01em;
+    }
+
+    .phase-description {
+      font-size: var(--text-md);
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin-bottom: var(--space-6);
+    }
+
+    .phase-number {
+      font-family: var(--font-mono);
+      font-size: var(--text-base);
+      font-weight: var(--font-medium);
+      color: var(--color-text-faint);
+      min-width: 24px;
+      padding-top: 2px;
+    }
+
+    .label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--color-text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================
+       SECTION DIVIDER
+       ============================================ */
+    .section-divider {
+      margin: var(--space-12) 0;
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--color-text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: var(--color-bg);
+      padding: 0 var(--space-4);
+      position: relative;
+    }
+
+    .section-divider::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: var(--color-border);
+      z-index: -1;
+    }
+
+    .section-divider {
+      position: relative;
+    }
+
+    /* ============================================
+       PIPELINE CONTAINER
+       ============================================ */
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+    /* ============================================
+       PHASE CARDS
+       ============================================ */
+    .phase-card {
+      background: var(--color-surface);
+      padding: var(--space-9) var(--space-10);
+      position: relative;
+    }
+
+    .phase-card:first-child {
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+
+    .phase-card:last-child {
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+    }
+
+    .phase-card:only-child {
+      border-radius: var(--radius-xl);
+    }
+
+    .phase-content {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-7);
+    }
+
+    .phase-main {
+      flex: 1;
+    }
+
+    /* ============================================
+       TAGS
+       ============================================ */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .tag {
+      font-size: var(--text-base);
+      font-weight: var(--font-medium);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--color-surface-secondary);
+      color: var(--color-text-secondary);
+    }
+
+    /* ============================================
+       OUTPUT COLUMN
+       ============================================ */
+    .output-column {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--color-text-faint);
+      padding-top: 2px;
+      min-width: 120px;
+    }
+
+    .output-file {
+      color: var(--color-text-primary);
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       SUB-STEPS
+       ============================================ */
+    .sub-steps {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .sub-step {
+      flex: 1;
+      min-width: 140px;
+      padding: var(--space-4) var(--space-5);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+    }
+
+    .sub-step-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      margin-bottom: var(--space-1);
+    }
+
+    .sub-step-label {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ============================================
+       RESULT CARDS
+       ============================================ */
+    .results-grid {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .result-card {
+      flex: 1;
+      min-width: 150px;
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-bg);
+      border-radius: var(--radius-md);
+      border-left: 2px solid var(--color-border);
+    }
+
+    .result-card.success { border-left-color: var(--color-success); }
+    .result-card.warning { border-left-color: var(--color-warning); }
+    .result-card.error { border-left-color: var(--color-error); }
+    .result-card.info { border-left-color: var(--color-info); }
+
+    .result-card-title {
+      font-size: var(--text-base);
+      font-weight: var(--font-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+
+    .result-card-desc {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+    }
+
+    /* ============================================
+       INSIGHT BOX
+       ============================================ */
+    .insight-box {
+      margin-top: var(--space-10);
+      padding: var(--space-8);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .insight-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      color: var(--color-text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-3);
+    }
+
+    .insight-text {
+      font-size: var(--text-md);
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .insight-text strong {
+      color: var(--color-text-primary);
+      font-weight: var(--font-medium);
+    }
+
+    /* ============================================
+       TECH STACK
+       ============================================ */
+    .tech-stack {
+      margin-top: var(--space-12);
+      display: flex;
+      justify-content: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .tech-badge {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--color-text-faint);
+      padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+    }
+
+    /* ============================================
+       FLOW CONNECTOR
+       ============================================ */
+    .flow-connector {
+      display: flex;
+      justify-content: center;
+      padding: var(--space-4) 0;
+    }
+
+    .flow-arrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-lg);
+      color: var(--color-text-faint);
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 640px) {
+      body {
+        padding: var(--space-10) var(--space-6);
+      }
+      
+      .main-title {
+        font-size: var(--text-2xl);
+      }
+      
+      .phase-content {
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+      
+      .phase-number {
+        min-width: auto;
+      }
+      
+      .output-column {
+        text-align: left;
+      }
+      
+      .sub-steps {
+        flex-direction: column;
+        gap: var(--space-3);
+      }
+      
+      .results-grid {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- TITLE SECTION -->
+    <div class="title-section">
+      <h1 class="main-title">Healthcare Claims Text-to-SQL Agent</h1>
+      <p class="subtitle">Production agentic system for natural language queries over a 200+ table claims database</p>
+    </div>
+    
+    
+    <!-- QUERY PROCESSING PIPELINE -->
+    <div class="section-divider">
+      <span class="section-label">Query Processing Pipeline</span>
+    </div>
+    
+    <div class="pipeline">
+      
+      <!-- PHASE 1: User Input -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">01</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Natural Language Input</h3>
+            <p class="phase-description">Business user submits question in plain English. System parses intent and identifies required data domains.</p>
+            <div class="tags">
+              <span class="tag">Intent Recognition</span>
+              <span class="tag">Domain Classification</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>input</div>
+            <div class="output-file">user_query</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 2: Knowledge Retrieval -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">02</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Knowledge Retrieval</h3>
+            <p class="phase-description">Vector search retrieves relevant schema documentation, business rules, and few-shot SQL examples from curated knowledge base.</p>
+            <div class="sub-steps">
+              <div class="sub-step">
+                <div class="sub-step-num">2.1</div>
+                <div class="sub-step-label">Schema context lookup</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">2.2</div>
+                <div class="sub-step-label">Similar query examples</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">2.3</div>
+                <div class="sub-step-label">Business rule injection</div>
+              </div>
+            </div>
+            <div class="tags">
+              <span class="tag">Vector Database</span>
+              <span class="tag">Semantic Search</span>
+              <span class="tag">Few-Shot Examples</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">context_bundle</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 3: Tool Calls -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">03</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Medical Code Resolution</h3>
+            <p class="phase-description">Specialized tools resolve clinical terminology to standardized codes, ensuring query accuracy for healthcare-specific logic.</p>
+            <div class="sub-steps">
+              <div class="sub-step">
+                <div class="sub-step-num">3.1</div>
+                <div class="sub-step-label">ICD code lookup</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">3.2</div>
+                <div class="sub-step-label">CPT procedure codes</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">3.3</div>
+                <div class="sub-step-label">NDC drug codes</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">3.4</div>
+                <div class="sub-step-label">Grouper logic</div>
+              </div>
+            </div>
+            <div class="tags">
+              <span class="tag">Tool Calling</span>
+              <span class="tag">Code Standardization</span>
+              <span class="tag">Claims Logic</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">resolved_codes</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 4: SQL Generation -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">04</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Decomposed SQL Generation</h3>
+            <p class="phase-description">LLM generates SQL through discrete decision pointsâ€”table selection, join logic, filters, aggregationsâ€”each granular enough to debug independently.</p>
+            <div class="sub-steps">
+              <div class="sub-step">
+                <div class="sub-step-num">4.1</div>
+                <div class="sub-step-label">Table selection</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">4.2</div>
+                <div class="sub-step-label">Join path determination</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">4.3</div>
+                <div class="sub-step-label">Filter construction</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">4.4</div>
+                <div class="sub-step-label">Aggregation & grouping</div>
+              </div>
+            </div>
+            <div class="tags">
+              <span class="tag">LLM</span>
+              <span class="tag">Decision Decomposition</span>
+              <span class="tag">Orchestration Layer</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">candidate_sql</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 5: Access Control -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">05</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Multi-Layer Access Control</h3>
+            <p class="phase-description">Three-tier security ensures data governance: database-level RBAC, programmatic roll-up enforcement, and prompt-level guardrails.</p>
+            <div class="results-grid">
+              <div class="result-card info">
+                <div class="result-card-title">RBAC Policy</div>
+                <div class="result-card-desc">Row-level database access control</div>
+              </div>
+              <div class="result-card warning">
+                <div class="result-card-title">Roll-up Logic</div>
+                <div class="result-card-desc">Programmatic aggregation rules</div>
+              </div>
+              <div class="result-card success">
+                <div class="result-card-title">Prompt Guardrails</div>
+                <div class="result-card-desc">Instruction-level constraints</div>
+              </div>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">secured_sql</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 6: Self-Correction -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">06</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Self-Correcting Execution</h3>
+            <p class="phase-description">Query executes against database with automatic retry loopâ€”up to 5 iterations to diagnose and fix execution errors before returning results.</p>
+            <div class="tags">
+              <span class="tag">Error Diagnosis</span>
+              <span class="tag">Iterative Refinement</span>
+              <span class="tag">Max 5 Attempts</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">query_results</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PHASE 7: Response -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">â†’</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Dual-Audience Response</h3>
+            <p class="phase-description">Output serves two user types: business users receive natural language answers; analysts receive SQL with full logic transparency.</p>
+            <div class="results-grid">
+              <div class="result-card success">
+                <div class="result-card-title">Business View</div>
+                <div class="result-card-desc">Plain English answer with data tables</div>
+              </div>
+              <div class="result-card info">
+                <div class="result-card-title">Analyst View</div>
+                <div class="result-card-desc">Generated SQL with reasoning trace</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    <!-- EVALUATION PIPELINE -->
+    <div class="section-divider" style="margin-top: var(--space-16);">
+      <span class="section-label">Evaluation & Improvement Pipeline</span>
+    </div>
+    
+    <div class="pipeline">
+      
+      <!-- EVAL PHASE 1 -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">E1</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Unit Test Framework</h3>
+            <p class="phase-description">Curated test suite covers edge cases, business logic consistency, and known failure modes across query categories.</p>
+            <div class="tags">
+              <span class="tag">Test Coverage</span>
+              <span class="tag">Regression Detection</span>
+              <span class="tag">Edge Cases</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">test_results.json</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- EVAL PHASE 2 -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">E2</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Automated SQL Judge</h3>
+            <p class="phase-description">LLM-powered judge programmatically assesses query correctness against expected outputsâ€”reduced evaluation time from 2-3 hours to 20 minutes.</p>
+            <div class="sub-steps">
+              <div class="sub-step">
+                <div class="sub-step-num">2.1</div>
+                <div class="sub-step-label">Semantic equivalence check</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">2.2</div>
+                <div class="sub-step-label">Result validation</div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-step-num">2.3</div>
+                <div class="sub-step-label">Error classification</div>
+              </div>
+            </div>
+            <div class="tags">
+              <span class="tag">LLM-as-Judge</span>
+              <span class="tag">Automated Scoring</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">judge_scores.json</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- EVAL PHASE 3 -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">E3</div>
+          <div class="phase-main">
+            <h3 class="phase-title">User Feedback Capture</h3>
+            <p class="phase-description">Pipeline infrastructure stores explicit feedback (thumbs up/down) and implicit signals (query edits, re-asks) for continuous improvement.</p>
+            <div class="tags">
+              <span class="tag">Explicit Feedback</span>
+              <span class="tag">Implicit Signals</span>
+              <span class="tag">Feedback Storage</span>
+            </div>
+          </div>
+          <div class="output-column">
+            <div>output</div>
+            <div class="output-file">feedback_log</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- EVAL PHASE 4 -->
+      <div class="phase-card">
+        <div class="phase-content">
+          <div class="phase-number">â†’</div>
+          <div class="phase-main">
+            <h3 class="phase-title">Evaluation Dashboard</h3>
+            <p class="phase-description">End-to-end visibility into system performance: user engagement metrics, accuracy trends, and AI-generated gap analysis identifying where the agent falls short.</p>
+            <div class="results-grid">
+              <div class="result-card success">
+                <div class="result-card-title">Engagement Metrics</div>
+                <div class="result-card-desc">Daily active users, query volume</div>
+              </div>
+              <div class="result-card info">
+                <div class="result-card-title">Accuracy Tracking</div>
+                <div class="result-card-desc">Pass rates by query category</div>
+              </div>
+              <div class="result-card warning">
+                <div class="result-card-title">Gap Analysis</div>
+                <div class="result-card-desc">AI-generated failure summaries</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    
+    <!-- INSIGHT BOX -->
+    <div class="insight-box">
+      <div class="insight-label">Key Innovation</div>
+      <div class="insight-text">
+        <strong>Decomposed decision architecture</strong> treats text-to-SQL as a series of discrete, debuggable choices rather than a monolithic generation task. Each decision pointâ€”table selection, join logic, filter constructionâ€”can be traced independently when errors occur, enabling targeted fixes instead of prompt-wide rewrites. Combined with the automated SQL judge, this creates a <strong>6-9x faster iteration cycle</strong> that compounds into measurably higher final accuracy.
+      </div>
+    </div>
+    
+    
+    <!-- TECH STACK -->
+    <div class="tech-stack">
+      <span class="tech-badge">Python</span>
+      <span class="tech-badge">LangChain</span>
+      <span class="tech-badge">Vector DB</span>
+      <span class="tech-badge">Snowflake</span>
+      <span class="tech-badge">React</span>
+      <span class="tech-badge">GEPA Optimization</span>
+    </div>
+    
+  </div>
+</body>
+</html>

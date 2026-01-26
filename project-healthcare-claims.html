@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Claims Database Agent — Wanmeng Liu</title>
+  <meta name="description" content="Production text-to-SQL system for a 200-table healthcare claims database, achieving ~85% accuracy and used daily for executive reporting.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Wanmeng Liu</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="writing.html">Writing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      
+      <!-- Project Header -->
+      <section class="project-detail-header">
+        <a href="projects.html" class="project-detail-back">← Back to projects</a>
+        <h1 class="project-detail-title">Healthcare Claims Database Agent</h1>
+        <p class="project-detail-tagline">Building self-service analytics for a 200-table healthcare claims database—now used daily for executive reporting</p>
+        
+        <div class="project-impact mt-8">
+          <div class="impact-item">
+            <span class="impact-value">~85%</span>
+            <span class="impact-label">accuracy</span>
+          </div>
+          <div class="impact-item">
+            <span class="impact-value">40%</span>
+            <span class="impact-label">productivity increase</span>
+          </div>
+          <div class="impact-item">
+            <span class="impact-value">200+</span>
+            <span class="impact-label">tables</span>
+          </div>
+        </div>
+        
+        <div class="tags mt-8">
+          <span class="tag">Text-to-SQL</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Medical Coding</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Vector DB</span>
+          <span class="tag">Snowflake</span>
+        </div>
+      </section>
+
+      <!-- The Problem -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">The Problem</h2>
+        <p class="project-detail-text">
+          Healthcare claims databases are notoriously complex: hundreds of tables, arcane medical coding systems (ICD, CPT, NDC), and business logic that varies by claim type, time period, and payer. At our organization, every analytical question—no matter how simple—required an analyst to manually write SQL. Business users waited hours or days for answers. Analysts spent their time on repetitive queries instead of strategic work.
+        </p>
+      </section>
+
+      <!-- The Insight -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">The Insight</h2>
+        <p class="project-detail-text">
+          The conventional approach to text-to-SQL treats it as a translation problem: take natural language, output SQL. But claims databases don't work that way. The same question—"show me inpatient costs"—requires completely different SQL depending on which table you query, which codes you use, and which business rules apply.
+        </p>
+        <p class="project-detail-text">
+          I reframed the problem: text-to-SQL isn't translation, it's <strong>decision-making</strong>. Writing a correct query requires dozens of sequential choices—which table, which join, which code system, which calculation method. Each choice is small enough to control and debug independently. Rather than asking an LLM to solve everything at once, I built a system that makes these decisions explicit, traceable, and correctable.
+        </p>
+        <p class="project-detail-text">
+          This meant the system could explain <em>why</em> it wrote the SQL it did—which matters when business users are putting outputs directly into board presentations.
+        </p>
+      </section>
+
+      <!-- Technical Approach -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Technical Approach</h2>
+        
+        <p class="project-detail-text">
+          The core architecture decomposes each query into discrete decision points. When a user asks about hospital costs, the system first determines claim type (inpatient vs. outpatient), then selects the appropriate table, then identifies the right medical codes, then applies the correct calculation logic. An orchestration layer compiles these decisions into coherent SQL, maintaining clear traceability—when something breaks, I know exactly which decision was responsible.
+        </p>
+        
+        <p class="project-detail-text">
+          I built comprehensive tooling for the domain complexity that makes healthcare claims uniquely difficult. This includes lookup tools for ICD, CPT, and NDC codes; logic handlers for claim type selection and table joins; and retrieval from a vector database of validated SQL examples. The system uses prompts and few-shot examples to ensure consistent application of business rules across queries. A self-correction mechanism attempts up to five iterations to fix execution errors before returning results.
+        </p>
+        
+        <p class="project-detail-text">
+          To close the feedback loop, I built an evaluation dashboard tracking user engagement and AI-generated gap analysis, plus an automated SQL judge that replaced manual review of unit tests. I designed and implemented the entire UI myself—custom CSS and HTML—since there was no UI developer on the team. The dashboard gave me visibility into both usage patterns and quality gaps, enabling targeted improvements that drove accuracy from early iterations to production-ready performance.
+        </p>
+      </section>
+
+      <!-- Architecture Diagram -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Architecture</h2>
+        <div class="architecture-embed">
+          <iframe src="diagrams/healthcare-claims-architecture.html" title="Healthcare Claims Text-to-SQL Agent Architecture"></iframe>
+        </div>
+      </section>
+
+      <!-- Impact -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Impact</h2>
+        <ul class="project-detail-list">
+          <li><strong>~85% accuracy</strong> on complex healthcare claims queries</li>
+          <li><strong>40% productivity increase</strong> among users who adopted the system</li>
+          <li><strong>~12.5% adoption</strong> among target users (~5 daily active users out of ~40 whose work requires claims data)</li>
+          <li>Business users query directly instead of waiting for analyst responses</li>
+          <li>Outputs used in <strong>executive slide decks and reports</strong></li>
+          <li>Transformed claims database access from analyst-dependent bottleneck to self-service capability</li>
+          <li>System later incorporated into larger insight generation architecture</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p class="footer-text">© 2025 Wanmeng Liu</p>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/wanmengliu" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Wanmeng Liu</title>
+  <meta name="description" content="AI engineering projects including text-to-SQL systems, clinical fraud detection, and enterprise healthcare analytics.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Wanmeng Liu</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="writing.html">Writing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      
+      <!-- Page Header -->
+      <section class="section">
+        <p class="section-label">Projects</p>
+        <h1 style="font-size: var(--text-3xl); font-weight: var(--font-semibold); letter-spacing: -0.02em; margin-bottom: var(--space-4);">Selected Work</h1>
+        <p style="font-size: var(--text-lg); color: var(--color-text-muted); line-height: 1.6; max-width: 600px;">
+          Enterprise AI systems built end-to-end: from stakeholder discovery through production deployment. Each project demonstrates full-stack ownership across architecture, implementation, and business impact.
+        </p>
+      </section>
+
+      <!-- Projects Grid -->
+      <section class="section" style="padding-top: 0;">
+        <div class="projects-grid">
+          
+          <!-- Project 1: Provider Performance Agent -->
+          <a href="project-provider-performance.html" class="project-card">
+            <div class="project-card-content">
+              <div class="project-card-header">
+                <span class="project-number">01</span>
+              </div>
+              <h2 class="project-title">Provider Performance Agent</h2>
+              <p class="project-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
+              <p class="project-description">
+                Built a text-to-SQL system for provider performance data that dramatically outperformed Snowflake's enterprise platform. Key innovation: treating query generation as a sequence of discrete decisions—table selection, join logic, filters, calculations—each traceable and debuggable independently. Led AWS-to-Snowflake migration that resolved organizational deadlock on compliance requirements.
+              </p>
+              <div class="project-impact">
+                <div class="impact-item">
+                  <span class="impact-value">&lt;20s</span>
+                  <span class="impact-label">response time</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">6-9×</span>
+                  <span class="impact-label">faster evaluation</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">Full-stack</span>
+                  <span class="impact-label">React + Python</span>
+                </div>
+              </div>
+              <div class="tags mt-6">
+                <span class="tag">Text-to-SQL</span>
+                <span class="tag">Multi-Agent</span>
+                <span class="tag">Snowflake</span>
+                <span class="tag">React</span>
+                <span class="tag">GEPA Optimization</span>
+              </div>
+              <div class="mt-8">
+                <span class="project-link">
+                  View full case study
+                  <span class="project-link-arrow">→</span>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 2: Sepsis Fraud Detection -->
+          <a href="project-sepsis.html" class="project-card">
+            <div class="project-card-content">
+              <div class="project-card-header">
+                <span class="project-number">02</span>
+              </div>
+              <h2 class="project-title">Sepsis Billing Fraud Detection</h2>
+              <p class="project-tagline">Proving what "incomplete" data can reveal—$1.8M recovered</p>
+              <p class="project-description">
+                Reframed an "impossible" fraud detection problem. The accepted blocker was insufficient clinical data for individual provider attribution. I proposed a different approach: prove that patterns exist at scale that warrant investigation, shifting the burden of proof. Built an end-to-end pipeline combining ML clustering with LLM interpretation to generate actionable investigation targets from incomplete claims data.
+              </p>
+              <div class="project-impact">
+                <div class="impact-item">
+                  <span class="impact-value">$1.8M</span>
+                  <span class="impact-label">recovered</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">~30%</span>
+                  <span class="impact-label">flagged for review</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">Novel</span>
+                  <span class="impact-label">methodology</span>
+                </div>
+              </div>
+              <div class="tags mt-6">
+                <span class="tag">K-Means Clustering</span>
+                <span class="tag">LLM Agent</span>
+                <span class="tag">Vector Embeddings</span>
+                <span class="tag">Claims Data</span>
+              </div>
+              <div class="mt-8">
+                <span class="project-link">
+                  View full case study
+                  <span class="project-link-arrow">→</span>
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Project 3: Healthcare Claims Agent -->
+          <a href="project-healthcare-claims.html" class="project-card">
+            <div class="project-card-content">
+              <div class="project-card-header">
+                <span class="project-number">03</span>
+              </div>
+              <h2 class="project-title">Healthcare Claims Database Agent</h2>
+              <p class="project-tagline">Building self-service analytics for a 200-table healthcare claims database—now used daily for executive reporting</p>
+              <p class="project-description">
+                Architected a production text-to-SQL system for one of the most complex data domains: healthcare claims with hundreds of tables, arcane medical coding systems (ICD, CPT, NDC), and business logic that varies by claim type, time period, and payer. Transformed claims database access from an analyst-dependent bottleneck to self-service capability. Outputs now appear in executive slide decks and board presentations.
+              </p>
+              <div class="project-impact">
+                <div class="impact-item">
+                  <span class="impact-value">~85%</span>
+                  <span class="impact-label">accuracy</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">40%</span>
+                  <span class="impact-label">productivity increase</span>
+                </div>
+                <div class="impact-item">
+                  <span class="impact-value">200+</span>
+                  <span class="impact-label">tables</span>
+                </div>
+              </div>
+              <div class="tags mt-6">
+                <span class="tag">Text-to-SQL</span>
+                <span class="tag">RAG</span>
+                <span class="tag">Medical Coding</span>
+                <span class="tag">LangChain</span>
+                <span class="tag">Vector DB</span>
+              </div>
+              <div class="mt-8">
+                <span class="project-link">
+                  View full case study
+                  <span class="project-link-arrow">→</span>
+                </span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p class="footer-text">© 2025 Wanmeng Liu</p>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/wanmengliu" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

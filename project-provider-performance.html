@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Performance Agent — Wanmeng Liu</title>
+  <meta name="description" content="Text-to-SQL system that outperformed Snowflake Intelligence by decomposing query generation into traceable decision points.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Wanmeng Liu</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="writing.html">Writing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      
+      <!-- Project Header -->
+      <section class="project-detail-header">
+        <a href="projects.html" class="project-detail-back">← Back to projects</a>
+        <h1 class="project-detail-title">Provider Performance Agent</h1>
+        <p class="project-detail-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
+        
+        <div class="project-impact mt-8">
+          <div class="impact-item">
+            <span class="impact-value">&lt;20s</span>
+            <span class="impact-label">response time</span>
+          </div>
+          <div class="impact-item">
+            <span class="impact-value">6-9×</span>
+            <span class="impact-label">faster evaluation</span>
+          </div>
+          <div class="impact-item">
+            <span class="impact-value">Full-stack</span>
+            <span class="impact-label">ownership</span>
+          </div>
+        </div>
+        
+        <div class="tags mt-8">
+          <span class="tag">Text-to-SQL</span>
+          <span class="tag">Multi-Agent</span>
+          <span class="tag">Snowflake</span>
+          <span class="tag">React</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">GEPA Optimization</span>
+        </div>
+      </section>
+
+      <!-- The Problem -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">The Problem</h2>
+        <p class="project-detail-text">
+          Healthcare organizations sit on rich provider performance data—cost efficiency, care appropriateness, quality metrics—but accessing it requires analysts who understand both the business logic and the underlying data model. Business users wait days for answers. Analysts spend hours on repetitive queries instead of deep analysis.
+        </p>
+        <p class="project-detail-text">
+          The obvious solution is natural language querying, but enterprise AI platforms consistently fail on complex proprietary datasets. When I evaluated Snowflake Intelligence on the provider performance data, the accuracy gaps were immediately disqualifying.
+        </p>
+      </section>
+
+      <!-- The Insight -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">The Insight</h2>
+        <p class="project-detail-text">
+          Most text-to-SQL systems treat query generation as a single problem: user question in, SQL out. When the query fails, you're left debugging a black box. I realized that writing a correct query isn't one decision—it's a sequence of discrete decisions, each with its own failure modes:
+        </p>
+        <ul class="project-detail-list">
+          <li>Which tables contain the relevant data?</li>
+          <li>How should they be joined?</li>
+          <li>What filters apply to this question?</li>
+          <li>Which metrics need calculation, and what's the correct formula?</li>
+          <li>How should results be aggregated and ordered?</li>
+        </ul>
+        <p class="project-detail-text">
+          By decomposing the problem this way, I could build an orchestration layer that makes each decision explicit and traceable. When a query returns wrong results, I know exactly which decision failed—was it table selection? Join logic? A calculation rule applied incorrectly? This traceability transformed debugging from guesswork into systematic diagnosis.
+        </p>
+        <p class="project-detail-text">
+          The second insight came during a compliance-driven platform migration. The organization was stuck in an unresolved argument: AWS services offered better AI capabilities, but Snowflake satisfied compliance requirements. I recognized this as a false binary. By mapping the architectural dependencies carefully, I found a migration path that preserved the text-to-SQL accuracy (the core value) while accepting some degradation in document retrieval performance (a secondary feature). This tradeoff broke the deadlock—not by finding a perfect solution, but by making the costs and benefits explicit enough that stakeholders could align.
+        </p>
+      </section>
+
+      <!-- Technical Approach -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Technical Approach</h2>
+        
+        <p class="project-detail-text">
+          <strong>Architecture.</strong> I built a master routing agent that receives user questions and directs them to specialized components: a SQL-generation agent for data queries, a document-retrieval agent for policy and methodology questions, or a decline response when the question falls outside scope. This consolidation meant users had one interface for all provider performance needs, rather than context-switching between tools.
+        </p>
+        
+        <p class="project-detail-text">
+          <strong>Decision decomposition.</strong> The SQL agent doesn't generate queries in one shot. It works through a structured sequence: identifying relevant tables, determining join paths, selecting appropriate filters, applying calculation rules, and composing the final query. Each step produces an intermediate artifact I can inspect. An orchestration layer compiles these decisions into executable SQL while maintaining full traceability.
+        </p>
+        
+        <p class="project-detail-text">
+          <strong>Self-correction loop.</strong> Queries that fail execution enter a correction cycle—up to five iterations of error analysis and query revision before returning results or acknowledging failure. This significantly improved success rates on complex questions without sacrificing transparency about what the system can and cannot do.
+        </p>
+        
+        <p class="project-detail-text">
+          <strong>Dual-audience design.</strong> Business users need answers and understand filters but don't write SQL. Analytical users need the SQL itself to verify logic or extend the analysis. I designed outputs to serve both: natural language summaries with the underlying query available on demand. This wasn't just a UI decision—it shaped how I structured the agent's reasoning to remain interpretable at every step.
+        </p>
+        
+        <p class="project-detail-text">
+          <strong>Full-stack ownership.</strong> With no UI developer on the team, I built the entire frontend—starting with custom CSS/HTML injections in Streamlit, then evolving to React components as requirements grew. The application handles conversation history, result visualization, feedback capture, and usage analytics.
+        </p>
+        
+        <p class="project-detail-text">
+          <strong>Evaluation infrastructure.</strong> I built an automated SQL judge that evaluates unit test results against expected outputs, reducing evaluation time from 2-3 hours of manual review to 20 minutes of human oversight. Faster feedback loops meant faster iteration and higher final accuracy.
+        </p>
+      </section>
+
+      <!-- Architecture Diagram -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Architecture</h2>
+        <div class="architecture-embed">
+          <iframe src="diagrams/provider-performance-architecture.html" title="Provider Performance Agent Architecture"></iframe>
+        </div>
+      </section>
+
+      <!-- Impact -->
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Impact</h2>
+        <ul class="project-detail-list">
+          <li><strong>Dramatically outperformed Snowflake Intelligence</strong> on provider performance data—accuracy differences led to strategic decision to build on custom architecture rather than enterprise platform</li>
+          <li><strong>Resolved organizational deadlock</strong> on environment requirements by executing AWS-to-Snowflake migration that satisfied compliance while preserving core functionality</li>
+          <li><strong>Enabled self-service querying</strong> for both business users (who previously waited for analyst support) and analytical users (who now get query logic they can verify and extend)</li>
+          <li><strong>6-9× speedup in evaluation cycles</strong> through automated SQL judge, enabling rapid iteration during development</li>
+          <li><strong>Sub-20-second response time</strong> on queries that previously took analysts minutes to hours</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p class="footer-text">© 2025 Wanmeng Liu</p>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/wanmengliu" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

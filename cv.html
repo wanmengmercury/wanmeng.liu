@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Wanmeng Liu</title>
+  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. M.S. Georgia Tech, 3+ years experience.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Wanmeng Liu</a>
+      <button class="nav-mobile-toggle" aria-label="Toggle menu" onclick="toggleNav()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="cv.html" class="active">CV</a></li>
+        <li><a href="writing.html">Writing</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="page">
+    <div class="container">
+      
+      <!-- CV Header -->
+      <section class="section">
+        <div class="cv-header">
+          <h1 class="cv-name">Wanmeng Liu</h1>
+          <div class="cv-contact">
+            <span>Cincinnati, OH</span>
+            <span>•</span>
+            <a href="mailto:wanmeng.m.liu@gmail.com">wanmeng.m.liu@gmail.com</a>
+            <span>•</span>
+            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+            <span>•</span>
+            <a href="https://github.com/wanmengliu" target="_blank" rel="noopener">GitHub</a>
+            <span>•</span>
+            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
+          </div>
+        </div>
+
+        <!-- Professional Summary -->
+        <div class="cv-section">
+          <p style="font-size: var(--text-lg); color: var(--color-text-secondary); line-height: 1.7;">
+            AI Engineer who operates as a full product team: I partner with stakeholders to define roadmaps, architect multi-agent systems, build full-stack applications, and deploy to production. Specializing in text-to-SQL, RAG, and agentic AI for enterprise healthcare—my custom system outperformed Snowflake Intelligence and is used daily by business and analytical users. Led a clinical fraud detection initiative that recovered $1.8M. Deep hands-on expertise across AWS and Snowflake ecosystems.
+          </p>
+        </div>
+      </section>
+
+      <!-- Professional Experience -->
+      <section class="cv-section">
+        <h2 class="cv-section-title">Professional Experience</h2>
+        
+        <!-- Blue Health Intelligence - Data Scientist -->
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">Blue Health Intelligence</h3>
+              <p class="cv-entry-subtitle">Chicago, IL (Hybrid)</p>
+            </div>
+          </div>
+          
+          <!-- Current Role -->
+          <div style="margin-bottom: var(--space-10);">
+            <div class="cv-entry-header">
+              <p class="cv-entry-role">Data Scientist</p>
+              <span class="cv-entry-date">Nov 2024 – Present</span>
+            </div>
+            
+            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Provider Performance Agent</p>
+            <ul class="cv-entry-list">
+              <li>Architected text-to-SQL agentic system for provider performance database that dramatically outperformed Snowflake Intelligence, leading to strategic decision to adopt custom architecture</li>
+              <li>Built master routing agent consolidating document retrieval, SQL generation, and guardrails into single application serving business users and analysts</li>
+              <li>Designed full-stack application (Python backend & Streamlit frontend) with no UI developer support</li>
+              <li>Led AWS-to-Snowflake migration satisfying client's compliance requirements, resolving organizational deadlock</li>
+              <li>Built automated SQL judge reducing unit test evaluation time from 2-3 hours to 20 minutes</li>
+            </ul>
+            
+            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Sepsis Billing Fraud Detection</p>
+            <ul class="cv-entry-list">
+              <li>Designed novel insurance fraud detection methodology proving group-level patterns could be identified from incomplete claims data</li>
+              <li>Built end-to-end pipeline: event tables from bundled claims, k-means clustering, LLM agent translating patterns into narratives</li>
+              <li>~30% of admissions flagged "unlikely sepsis"; independent audit validated findings, recovering $1.8M</li>
+            </ul>
+            
+            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Leadership & Team Development</p>
+            <ul class="cv-entry-list">
+              <li>Conduct all technical interviews for data scientist and analyst positions; mentor new hires and establish team coding standards</li>
+            </ul>
+          </div>
+          
+          <!-- Previous Role -->
+          <div>
+            <div class="cv-entry-header">
+              <p class="cv-entry-role">Associate Data Scientist</p>
+              <span class="cv-entry-date">July 2022 – Nov 2024</span>
+            </div>
+            
+            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Healthcare Claims Agent</p>
+            <ul class="cv-entry-list">
+              <li>Architected production text-to-SQL system for healthcare claims database (hundreds of tables), achieving ~85% accuracy and 40% productivity increase</li>
+              <li>Built comprehensive tooling for medical code lookup (ICD, CPT, NDC), claims logic, few shot examples, and query correction</li>
+              <li>Business users query directly instead of waiting for analysts; outputs used in executive slide decks and reports</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Georgia Tech -->
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">Georgia Institute of Technology</h3>
+              <p class="cv-entry-subtitle">Atlanta, GA</p>
+            </div>
+          </div>
+          <div class="cv-entry-header">
+            <p class="cv-entry-role">Graduate Research Assistant</p>
+            <span class="cv-entry-date">Aug 2021 – July 2022</span>
+          </div>
+          <ul class="cv-entry-list">
+            <li>Developed algorithm reducing clinical data processing from 31 days to 4 hours; analyzed 500M+ rows of Medicaid claims</li>
+            <li>Collaborated with CDC and Georgia DPH on COVID-19 simulations informing cruise ship and K-12 policies</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Publications -->
+      <section class="cv-section">
+        <h2 class="cv-section-title">Publications</h2>
+        
+        <div class="cv-entry">
+          <p style="font-size: var(--text-md); color: var(--color-text-secondary); line-height: 1.6;">
+            <strong>Liu, W.</strong>, Xie, Y., Vinson, S. et al. Prevalence of diagnosed mental health conditions among US children with public and commercial insurance. <em>BMC Public Health</em> 25, 4050 (2025). 
+            <a href="https://doi.org/10.1186/s12889-025-25422-0" target="_blank" rel="noopener" style="color: var(--color-text-muted);">https://doi.org/10.1186/s12889-025-25422-0</a>
+          </p>
+        </div>
+        
+        <div class="cv-entry" style="margin-top: var(--space-6);">
+          <p style="font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-muted); margin-bottom: var(--space-2);">Technical Writing</p>
+          <ul class="cv-entry-list">
+            <li>The LLM Isn't the Assembly Line (Dec 2025)</li>
+            <li>There Are No Shortcuts to Production AI Systems (Sep 2025)</li>
+            <li>From "Vibe Checking" to Systematic Agent Evaluation (Jun 2025)</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Technical Skills -->
+      <section class="cv-section">
+        <h2 class="cv-section-title">Technical Skills</h2>
+        
+        <div class="cv-skills-grid">
+          <div>
+            <p class="cv-skill-category">Languages & Frameworks</p>
+            <p class="cv-skill-list">Python, SQL, R | LangChain, LangGraph, DSPy | Pandas, PySpark, Scikit-learn</p>
+          </div>
+          <div>
+            <p class="cv-skill-category">Cloud Ecosystems</p>
+            <p class="cv-skill-list">AWS (Bedrock, Knowledge Base, S3, Athena, EC2) | Snowflake (Cortex LLM, Cortex Search, Embedding Models)</p>
+          </div>
+          <div>
+            <p class="cv-skill-category">AI Engineering</p>
+            <p class="cv-skill-list">Multi-Agent Architecture, RAG, Text-to-SQL, GEPA Optimization, Prompt Engineering, Evaluation Frameworks</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section class="cv-section">
+        <h2 class="cv-section-title">Education</h2>
+        
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <h3 class="cv-entry-title">Georgia Institute of Technology</h3>
+            <span class="cv-entry-date">Jan 2021 – May 2022</span>
+          </div>
+          <p class="cv-entry-subtitle">M.S. Health Systems (GPA: 3.8/4.0)</p>
+        </div>
+        
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <h3 class="cv-entry-title">George Washington University</h3>
+            <span class="cv-entry-date">Sep 2017 – Dec 2019</span>
+          </div>
+          <p class="cv-entry-subtitle">B.A. International Affairs (GPA: 3.56/4.0; Cum Laude)</p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <p class="footer-text">© 2025 Wanmeng Liu</p>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/wanmengliu" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
