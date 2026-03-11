@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV — Wanmeng Liu</title>
-  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. M.S. Georgia Tech, 3+ years experience.">
+  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. M.S. Georgia Tech.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,7 +56,7 @@
         <!-- Professional Summary -->
         <div class="cv-section">
           <p style="font-size: var(--text-lg); color: var(--color-text-secondary); line-height: 1.7;">
-            AI Engineer who operates as a full product team: I partner with stakeholders to define roadmaps, architect multi-agent systems, build full-stack applications, and deploy to production. Specializing in text-to-SQL, RAG, and agentic AI for enterprise healthcare—my custom system outperformed Snowflake Intelligence and is used daily by business and analytical users. Led a clinical fraud detection initiative that recovered $1.8M. Deep hands-on expertise across AWS and Snowflake ecosystems.
+            AI Engineer who builds agentic systems that ship. Specialized in text-to-SQL and multi-agent architectures for enterprise healthcare — domains where data is messy, logic is complex, and demos don't survive production. Two generations of systems in daily production use, outperforming Snowflake Intelligence. I think in evaluation frameworks and decomposed decision points, not prompt tricks. Published researcher (BMC Public Health).
           </p>
         </div>
       </section>
@@ -83,23 +83,26 @@
             
             <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Provider Performance Agent</p>
             <ul class="cv-entry-list">
-              <li>Architected text-to-SQL agentic system for provider performance database that dramatically outperformed Snowflake Intelligence, leading to strategic decision to adopt custom architecture</li>
-              <li>Built master routing agent consolidating document retrieval, SQL generation, and guardrails into single application serving business users and analysts</li>
-              <li>Designed full-stack application (Python backend & Streamlit frontend) with no UI developer support</li>
-              <li>Led AWS-to-Snowflake migration satisfying client's compliance requirements, resolving organizational deadlock</li>
-              <li>Built automated SQL judge reducing unit test evaluation time from 2-3 hours to 20 minutes</li>
+              <li>Architected and deployed end-to-end text-to-SQL agentic system as lead engineer — enabling natural language queries across proprietary provider performance metrics (cost, appropriateness, quality), achieving ~85% accuracy where Snowflake Intelligence scored ~20% and driving strategic platform decision</li>
+              <li>Built master routing agent orchestrating document retrieval, SQL generation, and guardrails into a single application serving dual audiences: business users who need answers and analysts who need accelerated SQL </li>
+              <li>Decomposed text-to-SQL into discrete, debuggable decision points with self-correcting query mechanism; parallelized retrieval reducing response time to &lt;20 seconds versus hours for human analysts</li>
+              <li>Designed and shipped full-stack application (Python backend, Streamlit & CSS & HTML frontend) — architecture through UI, no dedicated frontend engineer</li>
+              <li>Led full-stack migration from AWS (Bedrock, Knowledge Base, S3, Athena) to Snowflake-native architecture (Cortex LLM, Cortex Search, embedding models), resolving organizational deadlock on compliance requirements</li>
+              <li>Built automated evaluation pipeline: GEPA prompt optimization for systematic accuracy improvement, SQL judge reducing evaluation cycles from 2-3 hours to 20 minutes</li>
             </ul>
             
             <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Sepsis Billing Fraud Detection</p>
             <ul class="cv-entry-list">
-              <li>Designed novel insurance fraud detection methodology proving group-level patterns could be identified from incomplete claims data</li>
-              <li>Built end-to-end pipeline: event tables from bundled claims, k-means clustering, LLM agent translating patterns into narratives</li>
-              <li>~30% of admissions flagged "unlikely sepsis"; independent audit validated findings, recovering $1.8M</li>
+              <li>Designed novel fraud detection methodology proving group-level upcoding patterns could be identified from incomplete claims data — reframing a problem the industry typically considers blocked by insufficient clinical detail</li>
+              <li>Collaborated with chief medical officer to scope approach: built event tables defining 5 clinical traits distinguishing true sepsis from potential upcoding, constructed entirely from bundled claims with incomplete CPT and revenue codes</li>
+              <li>Developed end-to-end pipeline: vectorized patient event sequences, applied k-means clustering to surface 3 distinct admission patterns, and built LLM agent to translate statistical clusters into actionable narratives</li>
+              <li>~30% of admissions flagged as "unlikely sepsis"; independent audit by a major insurance company validated findings through manual chart review of 100 hospitals, recovering $1.8M</li>
+              <li>Sole technical contributor across the full pipeline — event tables, clustering, agent development, pattern interpretation</li>
             </ul>
             
             <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Leadership & Team Development</p>
             <ul class="cv-entry-list">
-              <li>Conduct all technical interviews for data scientist and analyst positions; mentor new hires and establish team coding standards</li>
+              <li>Own all technical hiring for the GenAI team: designed Python and SQL coding challenges used in every interview, screened 10+ candidates across data scientist and analyst roles, mentor new hires, and set team coding standards</li>
             </ul>
           </div>
           
@@ -112,9 +115,10 @@
             
             <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Healthcare Claims Agent</p>
             <ul class="cv-entry-list">
-              <li>Architected production text-to-SQL system for healthcare claims database (hundreds of tables), achieving ~85% accuracy and 40% productivity increase</li>
-              <li>Built comprehensive tooling for medical code lookup (ICD, CPT, NDC), claims logic, few shot examples, and query correction</li>
-              <li>Business users query directly instead of waiting for analysts; outputs used in executive slide decks and reports</li>
+              <li>Pioneered the company's first production text-to-SQL system on healthcare claims data (hundreds of tables) — the inherently harder domain requiring medical code resolution, claim type routing, and business logic that changes per query context</li>
+              <li>Developed comprehensive tooling layer: ICD/CPT/NDC code lookup, claims logic arbitration (inpatient vs. outpatient, join selection, calculation rules), and vector-based retrieval for few-shot SQL examples</li>
+              <li>Designed evaluation infrastructure surfacing usage patterns and quality gaps; built iterative improvement loop from user feedback to targeted prompt and tooling fixes</li>
+              <li>Achieved ~85% accuracy on complex claims queries; ~12.5% adoption among target users, with outputs used directly in executive slide decks and reports</li>
             </ul>
           </div>
         </div>
@@ -131,10 +135,20 @@
             <p class="cv-entry-role">Graduate Research Assistant</p>
             <span class="cv-entry-date">Aug 2021 – July 2022</span>
           </div>
+          <!-- GRA -->
+          <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Pediatric Mental Health Treatment Patterns</p>
           <ul class="cv-entry-list">
-            <li>Developed algorithm reducing clinical data processing from 31 days to 4 hours; analyzed 500M+ rows of Medicaid claims</li>
-            <li>Collaborated with CDC and Georgia DPH on COVID-19 simulations informing cruise ship and K-12 policies</li>
+            <li>Developed data processing algorithm reducing runtime from 31 days to 4 hours for 500M+ rows of Medicaid claims data across all 50 states — enabling analysis that was previously computationally impractical</li>
+            <li>Applied statistical modeling (regression, two-sample tests, Markov renewal process) to quantify cost and treatment variations in pediatric mental health across socioeconomic background</li>
+            <li>Research published in BMC Public Health (2025): large-scale comparison of mental health diagnosis prevalence between publicly and commercially insured children</li>
           </ul>
+          <!-- covid app -->
+          <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Sepsis Billing Fraud Detection</p>
+            <ul class="cv-entry-list">
+              <li>Collaborated with CDC and Georgia Department of Public Health on COVID-19 simulations analyzing associations between socioeconomic factors and case/hospitalization/vaccination outcomes across 159 Georgia counties</li>
+              <li>Delivered findings to mixed technical and policy audiences; results informed cruise ship and K-12 reopening policies</li>
+            </ul>
+
         </div>
       </section>
 
@@ -169,12 +183,12 @@
             <p class="cv-skill-list">Python, SQL, R | LangChain, LangGraph, DSPy | Pandas, PySpark, Scikit-learn</p>
           </div>
           <div>
-            <p class="cv-skill-category">Cloud Ecosystems</p>
-            <p class="cv-skill-list">AWS (Bedrock, Knowledge Base, S3, Athena, EC2) | Snowflake (Cortex LLM, Cortex Search, Embedding Models)</p>
+            <p class="cv-skill-category">AI Engineering</p>
+            <p class="cv-skill-list">Multi-Agent Architecture, RAG, Text-to-SQL, Evaluation Frameworks, Human Feedback Integration, Prompt Optimization (GEPA), Self-Correcting Agent Design</p>
           </div>
           <div>
-            <p class="cv-skill-category">AI Engineering</p>
-            <p class="cv-skill-list">Multi-Agent Architecture, RAG, Text-to-SQL, GEPA Optimization, Prompt Engineering, Evaluation Frameworks</p>
+            <p class="cv-skill-category">Infrastructure</p>
+            <p class="cv-skill-list">AWS (Bedrock, Knowledge Base, S3, Athena, EC2) | Snowflake (Cortex LLM, Cortex Search, Embedding Models) | Vector Databases</p>
           </div>
         </div>
       </section>
@@ -206,7 +220,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
-          <p class="footer-text">© 2025 Wanmeng Liu</p>
+          <p class="footer-text">© 2026 Wanmeng Liu</p>
           <div class="footer-links">
             <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
             <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
