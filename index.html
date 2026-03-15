@@ -4,18 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wanmeng Liu — AI Engineer</title>
-  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. Built systems that outperformed Snowflake Intelligence and recovered $1.8M in clinical fraud detection.">
-  
-  <!-- Google Fonts -->
+  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Wanmeng Liu</a>
@@ -25,8 +22,7 @@
         <span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li><a href="projects.html">Work</a></li>
         <li><a href="cv.html">CV</a></li>
         <li><a href="writing.html">Writing</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -34,125 +30,43 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main class="page">
     <div class="container">
-      
-      <!-- Hero Section -->
+
       <section class="hero">
-        <div class="hero-content">
-          <p class="hero-tagline">AI Engineer</p>
-          <h1 class="hero-title">I build AI systems that ship to production.</h1>
-          <p class="hero-subtitle">Full product team in one person: stakeholder alignment, multi-agent architecture, full-stack development, deployment.</p>
-          <p class="hero-description">
-            Specializing in text-to-SQL, RAG, and agentic AI for enterprise healthcare. My custom text-to-SQL system outperformed Snowflake Intelligence and is used daily for executive reporting. I led a clinical fraud detection initiative that recovered $1.8M through novel methodology.
-          </p>
-          <p class="hero-description">
-            I partner with stakeholders to define roadmaps, translate vague enterprise problems into technical solutions, and own the full stack from architecture to UI. Deep hands-on expertise across AWS and Snowflake ecosystems.
-          </p>
-          
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="stat-value">$1.8M</div>
-              <div class="stat-label">Recovered via fraud detection</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">~85%</div>
-              <div class="stat-label">Text-to-SQL accuracy</div>
-            </div>
-            <div class="stat">
-              <div class="stat-value">6-9×</div>
-              <div class="stat-label">Faster evaluation cycles</div>
-            </div>
-          </div>
-        </div>
+        <h1 class="hero-statement">I build AI systems that ship to production.</h1>
       </section>
 
-      <!-- Featured Work Preview -->
-      <section class="section">
-        <p class="section-label">Featured Work</p>
-        
-        <div class="projects-grid">
-          <!-- Project 1 -->
-          <a href="project-provider-performance.html" class="project-card">
-            <div class="project-card-content">
-              <div class="project-card-header">
-                <span class="project-number">01</span>
-              </div>
-              <h2 class="project-title">Provider Performance Agent</h2>
-              <p class="project-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
-              <div class="project-impact">
-                <div class="impact-item">
-                  <span class="impact-value">&lt;20s</span>
-                  <span class="impact-label">response time</span>
-                </div>
-                <div class="impact-item">
-                  <span class="impact-value">Full-stack</span>
-                  <span class="impact-label">ownership</span>
-                </div>
-              </div>
-              <span class="project-link">
-                View case study
-                <span class="project-link-arrow">→</span>
-              </span>
-            </div>
-          </a>
+      <section class="work">
+        <a href="project-provider-performance.html" class="featured-project">
+          <span class="mono-label">01</span>
+          <h2 class="featured-title">Provider Performance Agent</h2>
+          <p class="featured-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
+          <div class="featured-meta">
+            <span class="featured-stat">&lt;20s response time</span>
+            <span class="featured-stat">Full-stack ownership</span>
+            <span class="featured-arrow">View case study →</span>
+          </div>
+        </a>
 
-          <!-- Project 2 -->
-          <a href="project-sepsis.html" class="project-card">
-            <div class="project-card-content">
-              <div class="project-card-header">
-                <span class="project-number">02</span>
-              </div>
-              <h2 class="project-title">Sepsis Billing Fraud Detection</h2>
-              <p class="project-tagline">Proving what "incomplete" data can reveal—$1.8M recovered</p>
-              <div class="project-impact">
-                <div class="impact-item">
-                  <span class="impact-value">$1.8M</span>
-                  <span class="impact-label">recovered</span>
-                </div>
-                <div class="impact-item">
-                  <span class="impact-value">~30%</span>
-                  <span class="impact-label">flagged for review</span>
-                </div>
-              </div>
-              <span class="project-link">
-                View case study
-                <span class="project-link-arrow">→</span>
-              </span>
-            </div>
+        <div class="project-rows">
+          <a href="project-sepsis.html" class="project-row">
+            <span class="mono-label">02</span>
+            <span class="project-row-title">Sepsis Billing Fraud Detection</span>
+            <span class="project-row-detail">$1.8M recovered</span>
+            <span class="project-row-arrow">→</span>
           </a>
-
-          <!-- Project 3 -->
-          <a href="project-healthcare-claims.html" class="project-card">
-            <div class="project-card-content">
-              <div class="project-card-header">
-                <span class="project-number">03</span>
-              </div>
-              <h2 class="project-title">Healthcare Claims Database Agent</h2>
-              <p class="project-tagline">Building self-service analytics for a 200-table healthcare claims database</p>
-              <div class="project-impact">
-                <div class="impact-item">
-                  <span class="impact-value">~85%</span>
-                  <span class="impact-label">accuracy</span>
-                </div>
-                <div class="impact-item">
-                  <span class="impact-value">40%</span>
-                  <span class="impact-label">productivity increase</span>
-                </div>
-              </div>
-              <span class="project-link">
-                View case study
-                <span class="project-link-arrow">→</span>
-              </span>
-            </div>
+          <a href="project-healthcare-claims.html" class="project-row">
+            <span class="mono-label">03</span>
+            <span class="project-row-title">Healthcare Claims Agent</span>
+            <span class="project-row-detail">~85% accuracy, 200+ tables</span>
+            <span class="project-row-arrow">→</span>
           </a>
         </div>
       </section>
 
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">

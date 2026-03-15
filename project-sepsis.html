@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sepsis Billing Fraud Detection — Wanmeng Liu</title>
   <meta name="description" content="Novel fraud detection methodology that proved group-level patterns could be identified from incomplete claims data, recovering $1.8M.">
-  
-  <!-- Google Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Wanmeng Liu</a>
@@ -25,8 +22,7 @@
         <span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html" class="active">Projects</a></li>
+        <li><a href="projects.html" class="active">Work</a></li>
         <li><a href="cv.html">CV</a></li>
         <li><a href="writing.html">Writing</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -34,17 +30,15 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main class="page">
     <div class="container">
-      
-      <!-- Project Header -->
+
       <section class="project-detail-header">
-        <a href="projects.html" class="project-detail-back">← Back to projects</a>
+        <a href="projects.html" class="project-detail-back">← Back to work</a>
         <h1 class="project-detail-title">Sepsis Billing Fraud Detection</h1>
-        <p class="project-detail-tagline">Proving what "incomplete" data can reveal—$1.8M recovered</p>
-        
-        <div class="project-impact mt-8">
+        <p class="project-detail-tagline">Proving what "incomplete" data can reveal — $1.8M recovered</p>
+
+        <div class="project-detail-impact">
           <div class="impact-item">
             <span class="impact-value">$1.8M</span>
             <span class="impact-label">recovered</span>
@@ -58,8 +52,8 @@
             <span class="impact-label">methodology</span>
           </div>
         </div>
-        
-        <div class="tags mt-8">
+
+        <div class="project-detail-tags">
           <span class="tag">K-Means Clustering</span>
           <span class="tag">LLM Agent</span>
           <span class="tag">Vector Embeddings</span>
@@ -68,47 +62,43 @@
         </div>
       </section>
 
-      <!-- The Problem -->
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Problem</h2>
         <p class="project-detail-text">
-          Insurance fraud detection in healthcare typically requires detailed clinical data to attribute fraudulent billing to specific providers. But claims data is inherently incomplete—bundled codes, missing clinical context, revenue codes that obscure what actually happened in the hospital room.
+          Insurance fraud detection in healthcare typically requires detailed clinical data to attribute fraudulent billing to specific providers. But claims data is inherently incomplete — bundled codes, missing clinical context, revenue codes that obscure what actually happened in the hospital room.
         </p>
       </section>
 
-      <!-- The Insight -->
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Insight</h2>
         <p class="project-detail-text">
-          The blocker everyone accepted—"we don't have enough clinical data for individual-level analysis"—was only true if you insisted on the traditional approach. I proposed a reframe: what if we stopped trying to attribute fraud to specific providers and instead proved that <strong>patterns exist at scale</strong> that warrant investigation?
+          The blocker everyone accepted — "we don't have enough clinical data for individual-level analysis" — was only true if you insisted on the traditional approach. I proposed a reframe: what if we stopped trying to attribute fraud to specific providers and instead proved that <strong>patterns exist at scale</strong> that warrant investigation?
         </p>
         <p class="project-detail-text">
-          This shifted the burden of proof. We didn't need to build a courtroom case from claims data alone. We needed to give insurers enough statistical confidence to pull charts and investigate their own markets. The incomplete data couldn't tell us <em>who</em> was upcoding, but it could tell us <em>that</em> upcoding was happening—and where to look.
+          This shifted the burden of proof. We didn't need to build a courtroom case from claims data alone. We needed to give insurers enough statistical confidence to pull charts and investigate their own markets. The incomplete data couldn't tell us <em>who</em> was upcoding, but it could tell us <em>that</em> upcoding was happening — and where to look.
         </p>
       </section>
 
-      <!-- Technical Approach -->
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Technical Approach</h2>
-        
+
         <p class="project-detail-text">
-          Before writing any code, I conducted a comprehensive data quality assessment: what percentage of hospitals had sepsis admissions in our data? How many had bundled claims? How many had usable clinical event sequences? This audit shaped every subsequent decision—including the explicit scoping choice to pursue group-level patterns rather than individual attribution.
+          Before writing any code, I conducted a comprehensive data quality assessment: what percentage of hospitals had sepsis admissions in our data? How many had bundled claims? How many had usable clinical event sequences? This audit shaped every subsequent decision — including the explicit scoping choice to pursue group-level patterns rather than individual attribution.
         </p>
-        
+
         <p class="project-detail-text">
           I constructed event tables entirely from the incomplete claims data, defining five key clinical traits that should distinguish true sepsis admissions from infectious diseases that may have been upcoded. Each patient's events across the study period were vectorized into a representation suitable for clustering.
         </p>
-        
+
         <p class="project-detail-text">
           K-means identified three distinct groups: highly likely sepsis, maybe sepsis, and unlikely sepsis.
         </p>
-        
+
         <p class="project-detail-text">
-          The final piece was interpretability. Statistical clusters don't persuade clinical stakeholders—narratives do. I built an LLM agent to analyze the event patterns within each cluster and generate human-readable summaries of what distinguished each group. The entire analysis was packaged into a replicable pipeline for application to other fraud detection cases.
+          The final piece was interpretability. Statistical clusters don't persuade clinical stakeholders — narratives do. I built an LLM agent to analyze the event patterns within each cluster and generate human-readable summaries of what distinguished each group. The entire analysis was packaged into a replicable pipeline for application to other fraud detection cases.
         </p>
       </section>
 
-      <!-- Architecture Diagram -->
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Architecture</h2>
         <div class="architecture-embed">
@@ -116,20 +106,18 @@
         </div>
       </section>
 
-      <!-- Impact -->
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Impact</h2>
         <ul class="project-detail-list">
           <li><strong>~30% of admissions</strong> flagged as "unlikely sepsis," warranting further investigation</li>
           <li><strong>$1.8 million recovered</strong> after a large insurance plan's independent audit validated findings through manual chart reviews of 100 randomly sampled hospitals</li>
-          <li>Proved that group-level patterns can prompt insurers to investigate their own markets—even when data is too incomplete for individual provider attribution</li>
+          <li>Proved that group-level patterns can prompt insurers to investigate their own markets — even when data is too incomplete for individual provider attribution</li>
           <li>Methodology described as "groundbreaking and novel" by the Chief Medical Officer</li>
         </ul>
       </section>
 
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
@@ -192,33 +180,22 @@
       }
     }
 
-    // Zoom with scroll wheel
     document.getElementById('lightbox').addEventListener('wheel', function(e) {
       e.preventDefault();
       var delta = e.deltaY > 0 ? -0.15 : 0.15;
       var newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
-      if (newScale === MIN_SCALE) {
-        lbTranslateX = 0;
-        lbTranslateY = 0;
-      }
+      if (newScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
       lbScale = newScale;
       applyTransform();
     }, { passive: false });
 
-    // Double-click to toggle zoom
     document.getElementById('lightbox-img').addEventListener('dblclick', function(e) {
       e.stopPropagation();
-      if (lbScale > 1) {
-        lbScale = 1;
-        lbTranslateX = 0;
-        lbTranslateY = 0;
-      } else {
-        lbScale = 2.5;
-      }
+      if (lbScale > 1) { lbScale = 1; lbTranslateX = 0; lbTranslateY = 0; }
+      else { lbScale = 2.5; }
       applyTransform();
     });
 
-    // Pan when zoomed
     document.getElementById('lightbox-img').addEventListener('mousedown', function(e) {
       if (lbScale <= 1) return;
       e.preventDefault();
@@ -243,10 +220,7 @@
       if (img) img.style.cursor = '';
     });
 
-    // Touch pinch-to-zoom and pan
     var lastTouchDist = 0;
-    var lastTouchCenter = null;
-
     document.getElementById('lightbox').addEventListener('touchstart', function(e) {
       if (e.touches.length === 2) {
         e.preventDefault();
@@ -282,7 +256,6 @@
       lastTouchDist = 0;
     });
 
-    // Escape key to close
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeLightbox();
     });

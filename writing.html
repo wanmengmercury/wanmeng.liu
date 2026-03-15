@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Writing — Wanmeng Liu</title>
   <meta name="description" content="Technical writing on AI engineering, LLM agent evaluation, enterprise AI platforms, and systematization philosophy.">
-  
-  <!-- Google Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Wanmeng Liu</a>
@@ -25,8 +22,7 @@
         <span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li><a href="projects.html">Work</a></li>
         <li><a href="cv.html">CV</a></li>
         <li><a href="writing.html" class="active">Writing</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -34,79 +30,57 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main class="page">
     <div class="container">
-      
-      <!-- Page Header -->
-      <section class="section">
-        <p class="section-label">Writing</p>
-        <h1 style="font-size: var(--text-3xl); font-weight: var(--font-semibold); letter-spacing: -0.02em; margin-bottom: var(--space-4);">Technical Essays</h1>
-        <div class="writing-intro">
-          <p class="writing-intro-text">
-            I write about the realities of building production AI systems—the gaps between demos and deployment, the organizational challenges that shape technical decisions, and the systematic approaches that make complex systems work reliably.
-          </p>
-        </div>
-      </section>
 
-      <!-- Writing List -->
-      <section class="section" style="padding-top: 0;">
-        <div class="writing-list">
-          
-          <!-- Article 1 -->
-          <a href="https://open.substack.com/pub/wanmengliu/p/the-llm-isnt-the-assembly-line?utm_campaign=post-expanded-share&utm_medium=web" target="_blank" rel="noopener" class="writing-item">
-            <div class="writing-item-content">
-              <h2 class="writing-item-title">The LLM Isn't the Assembly Line</h2>
-              <p class="writing-item-description">
-                Why treating AI systems like software factories misses the point. The real value isn't in the model—it's in the orchestration layer that makes decisions explicit, traceable, and correctable.
-              </p>
-            </div>
-            <span class="writing-item-date">Dec 2025</span>
-          </a>
-          
-          <!-- Article 2 -->
-          <a href="https://open.substack.com/pub/wanmengliu/p/there-are-no-shortcuts-to-production?utm_campaign=post-expanded-share&utm_medium=web" target="_blank" rel="noopener" class="writing-item">
-            <div class="writing-item-content">
-              <h2 class="writing-item-title">There Are No Shortcuts to Production AI Systems</h2>
-              <p class="writing-item-description">
-                Enterprise AI platforms promise quick wins but consistently fail on proprietary data. What I learned building systems that had to work in the real world—where data is messy, requirements are unclear, and stakeholders have competing priorities.
-              </p>
-            </div>
-            <span class="writing-item-date">Sep 2025</span>
-          </a>
-          
-          <!-- Article 3 -->
-          <a href="https://open.substack.com/pub/wanmengliu/p/from-vibe-checking-to-systematic?utm_campaign=post-expanded-share&utm_medium=post%20viewer" target="_blank" rel="noopener" class="writing-item">
-            <div class="writing-item-content">
-              <h2 class="writing-item-title">From "Vibe Checking" to Systematic Agent Evaluation</h2>
-              <p class="writing-item-description">
-                Most teams evaluate LLM agents by running a few examples and checking if the outputs "feel right." Here's how to build evaluation infrastructure that actually tells you whether your system is improving—and where it's falling short.
-              </p>
-            </div>
-            <span class="writing-item-date">Jun 2025</span>
-          </a>
-          
-        </div>
-      </section>
+      <div class="page-header">
+        <h1 class="page-title">Writing</h1>
+        <p class="page-description">
+          On the realities of building production AI systems — the gaps between demos and deployment, and the systematic approaches that make complex systems work reliably.
+        </p>
+      </div>
 
-      <!-- Substack CTA -->
-      <section class="section">
-        <div class="card" style="text-align: center;">
-          <p class="card-label">Subscribe</p>
-          <h3 class="card-title">Get new essays in your inbox</h3>
-          <p class="card-description" style="max-width: 400px; margin: 0 auto var(--space-8);">
-            I write occasionally about AI engineering, enterprise systems, and the work of shipping to production.
-          </p>
-          <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener" class="project-link" style="display: inline-flex;">
-            Subscribe on Substack
-            <span class="project-link-arrow">→</span>
-          </a>
-        </div>
-      </section>
+      <div class="writing-list">
+        <a href="https://open.substack.com/pub/wanmengliu/p/the-llm-isnt-the-assembly-line?utm_campaign=post-expanded-share&utm_medium=web" target="_blank" rel="noopener" class="writing-item">
+          <div class="writing-item-content">
+            <h2 class="writing-item-title">The LLM Isn't the Assembly Line</h2>
+            <p class="writing-item-description">
+              Why treating AI systems like software factories misses the point. The real value isn't in the model — it's in the orchestration layer that makes decisions explicit, traceable, and correctable.
+            </p>
+          </div>
+          <span class="writing-item-date">Dec 2025</span>
+        </a>
+
+        <a href="https://open.substack.com/pub/wanmengliu/p/there-are-no-shortcuts-to-production?utm_campaign=post-expanded-share&utm_medium=web" target="_blank" rel="noopener" class="writing-item">
+          <div class="writing-item-content">
+            <h2 class="writing-item-title">There Are No Shortcuts to Production AI Systems</h2>
+            <p class="writing-item-description">
+              Enterprise AI platforms promise quick wins but consistently fail on proprietary data. What I learned building systems that had to work in the real world.
+            </p>
+          </div>
+          <span class="writing-item-date">Sep 2025</span>
+        </a>
+
+        <a href="https://open.substack.com/pub/wanmengliu/p/from-vibe-checking-to-systematic?utm_campaign=post-expanded-share&utm_medium=post%20viewer" target="_blank" rel="noopener" class="writing-item">
+          <div class="writing-item-content">
+            <h2 class="writing-item-title">From "Vibe Checking" to Systematic Agent Evaluation</h2>
+            <p class="writing-item-description">
+              Most teams evaluate LLM agents by running a few examples and checking if the outputs "feel right." Here's how to build evaluation infrastructure that actually tells you whether your system is improving.
+            </p>
+          </div>
+          <span class="writing-item-date">Jun 2025</span>
+        </a>
+      </div>
+
+      <div class="writing-cta">
+        <p class="writing-cta-text">I write occasionally about AI engineering and the work of shipping to production.</p>
+        <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener" class="writing-cta-link">
+          Subscribe on Substack →
+        </a>
+      </div>
 
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">

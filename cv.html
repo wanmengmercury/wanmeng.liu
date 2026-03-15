@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV — Wanmeng Liu</title>
   <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. M.S. Georgia Tech.">
-  
-  <!-- Google Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Wanmeng Liu</a>
@@ -25,8 +22,7 @@
         <span></span>
       </button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
+        <li><a href="projects.html">Work</a></li>
         <li><a href="cv.html" class="active">CV</a></li>
         <li><a href="writing.html">Writing</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -34,38 +30,30 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
   <main class="page">
     <div class="container">
-      
-      <!-- CV Header -->
-      <section class="section">
-        <div class="cv-header">
-          <h1 class="cv-name">Wanmeng Liu</h1>
-          <div class="cv-contact">
-            <span>Cincinnati, OH</span>
-            <span>•</span>
-            <a href="mailto:wanmeng.m.liu@gmail.com">wanmeng.m.liu@gmail.com</a>
-            <span>•</span>
-            <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
-            <span>•</span>
-            <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
-          </div>
-        </div>
 
-        <!-- Professional Summary -->
-        <div class="cv-section">
-          <p style="font-size: var(--text-lg); color: var(--color-text-secondary); line-height: 1.7;">
-            AI Engineer who builds agentic systems that ship. Specialized in text-to-SQL and multi-agent architectures for enterprise healthcare — domains where data is messy, logic is complex, and demos don't survive production. Two generations of systems in daily production use, outperforming Snowflake Intelligence. I think in evaluation frameworks and decomposed decision points, not prompt tricks. Published researcher (BMC Public Health).
-          </p>
+      <div class="cv-header">
+        <h1 class="cv-name">Wanmeng Liu</h1>
+        <div class="cv-contact">
+          <span>Cincinnati, OH</span>
+          <span>·</span>
+          <a href="mailto:wanmeng.m.liu@gmail.com">wanmeng.m.liu@gmail.com</a>
+          <span>·</span>
+          <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener">LinkedIn</a>
+          <span>·</span>
+          <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener">Substack</a>
         </div>
-      </section>
+      </div>
+
+      <p class="cv-summary">
+        AI Engineer who builds agentic systems that ship. Specialized in text-to-SQL and multi-agent architectures for enterprise healthcare — domains where data is messy, logic is complex, and demos don't survive production. Two generations of systems in daily production use, outperforming Snowflake Intelligence. Published researcher (BMC Public Health).
+      </p>
 
       <!-- Professional Experience -->
       <section class="cv-section">
-        <h2 class="cv-section-title">Professional Experience</h2>
-        
-        <!-- Blue Health Intelligence - Data Scientist -->
+        <h2 class="cv-section-title">Experience</h2>
+
         <div class="cv-entry">
           <div class="cv-entry-header">
             <div>
@@ -73,25 +61,25 @@
               <p class="cv-entry-subtitle">Chicago, IL (Hybrid)</p>
             </div>
           </div>
-          
+
           <!-- Current Role -->
-          <div style="margin-bottom: var(--space-10);">
+          <div style="margin-bottom: var(--s-7);">
             <div class="cv-entry-header">
               <p class="cv-entry-role">Data Scientist</p>
               <span class="cv-entry-date">Nov 2024 – Present</span>
             </div>
-            
-            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Provider Performance Agent</p>
+
+            <p class="cv-project-label">Provider Performance Agent</p>
             <ul class="cv-entry-list">
               <li>Architected and deployed end-to-end text-to-SQL agentic system as lead engineer — enabling natural language queries across proprietary provider performance metrics (cost, appropriateness, quality), achieving ~85% accuracy where Snowflake Intelligence scored ~20% and driving strategic platform decision</li>
-              <li>Built master routing agent orchestrating document retrieval, SQL generation, and guardrails into a single application serving dual audiences: business users who need answers and analysts who need accelerated SQL </li>
+              <li>Built master routing agent orchestrating document retrieval, SQL generation, and guardrails into a single application serving dual audiences: business users who need answers and analysts who need accelerated SQL</li>
               <li>Decomposed text-to-SQL into discrete, debuggable decision points with self-correcting query mechanism; parallelized retrieval reducing response time to &lt;20 seconds versus hours for human analysts</li>
               <li>Designed and shipped full-stack application (Python backend, Streamlit & CSS & HTML frontend) — architecture through UI, no dedicated frontend engineer</li>
               <li>Led full-stack migration from AWS (Bedrock, Knowledge Base, S3, Athena) to Snowflake-native architecture (Cortex LLM, Cortex Search, embedding models), resolving organizational deadlock on compliance requirements</li>
               <li>Built automated evaluation pipeline: GEPA prompt optimization for systematic accuracy improvement, SQL judge reducing evaluation cycles from 2-3 hours to 20 minutes</li>
             </ul>
-            
-            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Sepsis Billing Fraud Detection</p>
+
+            <p class="cv-project-label">Sepsis Billing Fraud Detection</p>
             <ul class="cv-entry-list">
               <li>Designed novel fraud detection methodology proving group-level upcoding patterns could be identified from incomplete claims data — reframing a problem the industry typically considers blocked by insufficient clinical detail</li>
               <li>Collaborated with chief medical officer to scope approach: built event tables defining 5 clinical traits distinguishing true sepsis from potential upcoding, constructed entirely from bundled claims with incomplete CPT and revenue codes</li>
@@ -99,21 +87,21 @@
               <li>~30% of admissions flagged as "unlikely sepsis"; independent audit by a major insurance company validated findings through manual chart review of 100 hospitals, recovering $1.8M</li>
               <li>Sole technical contributor across the full pipeline — event tables, clustering, agent development, pattern interpretation</li>
             </ul>
-            
-            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Leadership & Team Development</p>
+
+            <p class="cv-project-label">Leadership & Team Development</p>
             <ul class="cv-entry-list">
               <li>Own all technical hiring for the GenAI team: designed Python and SQL coding challenges used in every interview, screened 10+ candidates across data scientist and analyst roles, mentor new hires, and set team coding standards</li>
             </ul>
           </div>
-          
+
           <!-- Previous Role -->
           <div>
             <div class="cv-entry-header">
               <p class="cv-entry-role">Associate Data Scientist</p>
               <span class="cv-entry-date">July 2022 – Nov 2024</span>
             </div>
-            
-            <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Healthcare Claims Agent</p>
+
+            <p class="cv-project-label">Healthcare Claims Agent</p>
             <ul class="cv-entry-list">
               <li>Pioneered the company's first production text-to-SQL system on healthcare claims data (hundreds of tables) — the inherently harder domain requiring medical code resolution, claim type routing, and business logic that changes per query context</li>
               <li>Developed comprehensive tooling layer: ICD/CPT/NDC code lookup, claims logic arbitration (inpatient vs. outpatient, join selection, calculation rules), and vector-based retrieval for few-shot SQL examples</li>
@@ -122,7 +110,7 @@
             </ul>
           </div>
         </div>
-        
+
         <!-- Georgia Tech -->
         <div class="cv-entry">
           <div class="cv-entry-header">
@@ -135,36 +123,35 @@
             <p class="cv-entry-role">Graduate Research Assistant</p>
             <span class="cv-entry-date">Aug 2021 – July 2022</span>
           </div>
-          <!-- GRA -->
-          <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-4); margin-bottom: var(--space-2);">Pediatric Mental Health Treatment Patterns</p>
+
+          <p class="cv-project-label">Pediatric Mental Health Treatment Patterns</p>
           <ul class="cv-entry-list">
             <li>Developed data processing algorithm reducing runtime from 31 days to 4 hours for 500M+ rows of Medicaid claims data across all 50 states — enabling analysis that was previously computationally impractical</li>
             <li>Applied statistical modeling (regression, two-sample tests, Markov renewal process) to quantify cost and treatment variations in pediatric mental health across socioeconomic background</li>
             <li>Research published in BMC Public Health (2025): large-scale comparison of mental health diagnosis prevalence between publicly and commercially insured children</li>
           </ul>
-          <!-- covid app -->
-          <p style="font-size: var(--text-md); font-weight: var(--font-medium); color: var(--color-text-primary); margin-top: var(--space-6); margin-bottom: var(--space-2);">Sepsis Billing Fraud Detection</p>
-            <ul class="cv-entry-list">
-              <li>Collaborated with CDC and Georgia Department of Public Health on COVID-19 simulations analyzing associations between socioeconomic factors and case/hospitalization/vaccination outcomes across 159 Georgia counties</li>
-              <li>Delivered findings to mixed technical and policy audiences; results informed cruise ship and K-12 reopening policies</li>
-            </ul>
 
+          <p class="cv-project-label">COVID-19 Epidemiological Modeling</p>
+          <ul class="cv-entry-list">
+            <li>Collaborated with CDC and Georgia Department of Public Health on COVID-19 simulations analyzing associations between socioeconomic factors and case/hospitalization/vaccination outcomes across 159 Georgia counties</li>
+            <li>Delivered findings to mixed technical and policy audiences; results informed cruise ship and K-12 reopening policies</li>
+          </ul>
         </div>
       </section>
 
       <!-- Publications -->
       <section class="cv-section">
         <h2 class="cv-section-title">Publications</h2>
-        
+
         <div class="cv-entry">
-          <p style="font-size: var(--text-md); color: var(--color-text-secondary); line-height: 1.6;">
-            <strong>Liu, W.</strong>, Xie, Y., Vinson, S. et al. Prevalence of diagnosed mental health conditions among US children with public and commercial insurance. <em>BMC Public Health</em> 25, 4050 (2025). 
-            <a href="https://doi.org/10.1186/s12889-025-25422-0" target="_blank" rel="noopener" style="color: var(--color-text-muted);">https://doi.org/10.1186/s12889-025-25422-0</a>
+          <p style="font-size: var(--text-small); color: var(--color-text-secondary); line-height: 1.7;">
+            <strong>Liu, W.</strong>, Xie, Y., Vinson, S. et al. Prevalence of diagnosed mental health conditions among US children with public and commercial insurance. <em>BMC Public Health</em> 25, 4050 (2025).
+            <a href="https://doi.org/10.1186/s12889-025-25422-0" target="_blank" rel="noopener" style="color: var(--color-text-muted);">doi.org/10.1186/s12889-025-25422-0</a>
           </p>
         </div>
-        
-        <div class="cv-entry" style="margin-top: var(--space-6);">
-          <p style="font-size: var(--text-sm); font-weight: var(--font-medium); color: var(--color-text-muted); margin-bottom: var(--space-2);">Technical Writing</p>
+
+        <div class="cv-entry" style="margin-top: var(--s-4);">
+          <p class="cv-project-label">Technical Writing</p>
           <ul class="cv-entry-list">
             <li>The LLM Isn't the Assembly Line (Dec 2025)</li>
             <li>There Are No Shortcuts to Production AI Systems (Sep 2025)</li>
@@ -176,7 +163,7 @@
       <!-- Technical Skills -->
       <section class="cv-section">
         <h2 class="cv-section-title">Technical Skills</h2>
-        
+
         <div class="cv-skills-grid">
           <div>
             <p class="cv-skill-category">Languages & Frameworks</p>
@@ -196,7 +183,7 @@
       <!-- Education -->
       <section class="cv-section">
         <h2 class="cv-section-title">Education</h2>
-        
+
         <div class="cv-entry">
           <div class="cv-entry-header">
             <h3 class="cv-entry-title">Georgia Institute of Technology</h3>
@@ -204,7 +191,7 @@
           </div>
           <p class="cv-entry-subtitle">M.S. Health Systems (GPA: 3.8/4.0)</p>
         </div>
-        
+
         <div class="cv-entry">
           <div class="cv-entry-header">
             <h3 class="cv-entry-title">George Washington University</h3>
@@ -216,7 +203,6 @@
 
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
