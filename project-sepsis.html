@@ -112,7 +112,7 @@
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Architecture</h2>
         <div class="architecture-embed">
-          <iframe src="diagrams/sepsis-architecture.html" title="Clinical Fraud Detection Pipeline Architecture"></iframe>
+          <img src="diagrams/Sepsis workflow fitted.png" alt="Clinical Fraud Detection Pipeline Architecture" onclick="openLightbox(this.src)">
         </div>
       </section>
 
@@ -143,10 +143,149 @@
     </footer>
   </main>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <div class="lightbox-container" id="lightbox-container">
+      <img id="lightbox-img" src="" alt="" draggable="false">
+    </div>
+  </div>
+
   <script>
     function toggleNav() {
       document.getElementById('navLinks').classList.toggle('active');
     }
+
+    var lbScale = 1;
+    var lbTranslateX = 0;
+    var lbTranslateY = 0;
+    var isDragging = false;
+    var dragStartX, dragStartY, startTranslateX, startTranslateY;
+    var MIN_SCALE = 1;
+    var MAX_SCALE = 5;
+
+    function openLightbox(src) {
+      var lb = document.getElementById('lightbox');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      applyTransform();
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function applyTransform() {
+      var img = document.getElementById('lightbox-img');
+      img.style.transform = 'translate(' + lbTranslateX + 'px, ' + lbTranslateY + 'px) scale(' + lbScale + ')';
+    }
+
+    function handleLightboxClick(e) {
+      if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    }
+
+    // Zoom with scroll wheel
+    document.getElementById('lightbox').addEventListener('wheel', function(e) {
+      e.preventDefault();
+      var delta = e.deltaY > 0 ? -0.15 : 0.15;
+      var newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+      if (newScale === MIN_SCALE) {
+        lbTranslateX = 0;
+        lbTranslateY = 0;
+      }
+      lbScale = newScale;
+      applyTransform();
+    }, { passive: false });
+
+    // Double-click to toggle zoom
+    document.getElementById('lightbox-img').addEventListener('dblclick', function(e) {
+      e.stopPropagation();
+      if (lbScale > 1) {
+        lbScale = 1;
+        lbTranslateX = 0;
+        lbTranslateY = 0;
+      } else {
+        lbScale = 2.5;
+      }
+      applyTransform();
+    });
+
+    // Pan when zoomed
+    document.getElementById('lightbox-img').addEventListener('mousedown', function(e) {
+      if (lbScale <= 1) return;
+      e.preventDefault();
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      startTranslateX = lbTranslateX;
+      startTranslateY = lbTranslateY;
+      document.getElementById('lightbox-img').style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      lbTranslateX = startTranslateX + (e.clientX - dragStartX);
+      lbTranslateY = startTranslateY + (e.clientY - dragStartY);
+      applyTransform();
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      var img = document.getElementById('lightbox-img');
+      if (img) img.style.cursor = '';
+    });
+
+    // Touch pinch-to-zoom and pan
+    var lastTouchDist = 0;
+    var lastTouchCenter = null;
+
+    document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        lastTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      } else if (e.touches.length === 1 && lbScale > 1) {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX;
+        dragStartY = e.touches[0].clientY;
+        startTranslateX = lbTranslateX;
+        startTranslateY = lbTranslateY;
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        var delta = (dist - lastTouchDist) * 0.01;
+        lbScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+        if (lbScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
+        lastTouchDist = dist;
+        applyTransform();
+      } else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        lbTranslateX = startTranslateX + (e.touches[0].clientX - dragStartX);
+        lbTranslateY = startTranslateY + (e.touches[0].clientY - dragStartY);
+        applyTransform();
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchend', function() {
+      isDragging = false;
+      lastTouchDist = 0;
+    });
+
+    // Escape key to close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
   </script>
 </body>
 </html>
