@@ -54,65 +54,73 @@
         </div>
 
         <div class="project-detail-tags">
-          <span class="tag">K-Means Clustering</span>
-          <span class="tag">LLM Agent</span>
-          <span class="tag">Vector Embeddings</span>
-          <span class="tag">Claims Data</span>
           <span class="tag">Fraud Detection</span>
+          <span class="tag">Clustering</span>
+          <span class="tag">LLM Agents</span>
+          <span class="tag">Healthcare Claims</span>
         </div>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Problem</h2>
         <p class="project-detail-text">
-          Insurance fraud detection in healthcare typically requires detailed clinical data to attribute fraudulent billing to specific providers. But claims data is inherently incomplete — bundled codes, missing clinical context, revenue codes that obscure what actually happened in the hospital room.
+          Sepsis upcoding is a known problem in healthcare fraud: hospitals billing infectious disease admissions under higher-reimbursement sepsis DRGs. But claims data lacks the clinical granularity to prove it. No chart notes. Bundled procedure codes. Revenue codes that obscure what actually happened bedside. The question wasn't whether fraud existed. It was whether anyone could know from this data at all.
+
+
         </p>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Insight</h2>
         <p class="project-detail-text">
-          The blocker everyone accepted — "we don't have enough clinical data for individual-level analysis" — was only true if you insisted on the traditional approach. I proposed a reframe: what if we stopped trying to attribute fraud to specific providers and instead proved that <strong>patterns exist at scale</strong> that warrant investigation?
+          Everyone framed this as an individual attribution problem: prove this provider upcoded this patient. That requires clinical chart data we didn't have. I reframed it as a statistical detection problem: prove that patterns exist at scale inconsistent with genuine sepsis treatment and then give insurers enough confidence to pull charts themselves.
+The incomplete data couldn't tell us who. It could tell us where to look.
         </p>
-        <p class="project-detail-text">
-          This shifted the burden of proof. We didn't need to build a courtroom case from claims data alone. We needed to give insurers enough statistical confidence to pull charts and investigate their own markets. The incomplete data couldn't tell us <em>who</em> was upcoding, but it could tell us <em>that</em> upcoding was happening — and where to look.
-        </p>
+
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Technical Approach</h2>
 
         <p class="project-detail-text">
-          Before writing any code, I conducted a comprehensive data quality assessment: what percentage of hospitals had sepsis admissions in our data? How many had bundled claims? How many had usable clinical event sequences? This audit shaped every subsequent decision — including the explicit scoping choice to pursue group-level patterns rather than individual attribution.
+          The diagram below traces the full pipeline, five phases from clinical study design through pattern interpretation.
         </p>
 
-        <p class="project-detail-text">
-          I constructed event tables entirely from the incomplete claims data, defining five key clinical traits that should distinguish true sepsis admissions from infectious diseases that may have been upcoded. Each patient's events across the study period were vectorized into a representation suitable for clustering.
-        </p>
+        <section class="project-detail-section">
+          <h2 class="project-detail-section-title">Architecture</h2>
+          <div class="architecture-embed">
+            <img src="diagrams/Sepsis workflow fitted.png" alt="Clinical Fraud Detection Pipeline Architecture" onclick="openLightbox(this.src)">
+          </div>
+        </section>
 
         <p class="project-detail-text">
-          K-means identified three distinct groups: highly likely sepsis, maybe sepsis, and unlikely sepsis.
+          The hardest part wasn't the ML. It was defining what "sepsis evidence" looks like in data that actively obscures it.
+        </p>
+        <p class="project-detail-text">
+          I started by designing a clinical study protocol in collaboration with a senior physician: target DRG codes, inclusion/exclusion criteria, comparison conditions. Then I ran exploratory analysis, sepsis-to-comparison-condition ratios by year and facility, to understand baseline patterns and select a representative hospital for end-to-end pipeline development.
+        </p>
+        <p class="project-detail-text">
+          The critical engineering challenge was feature construction. Claims procedure codes for these admissions were overwhelmingly evaluation-and-management codes. They told you a patient was seen, not what clinical service was provided. IV fluids didn't appear in procedure codes. Antibiotics didn't appear reliably. Lab tests appeared on different days than when they were performed, because services get bundled across claims. For each of the five clinical markers (the traits that distinguish genuine sepsis treatment), I had to determine: where in the data does this evidence actually live? If not in procedure codes, can revenue codes infer it? If timing is unreliable, how loose should the detection window be?
+        </p>
+        <p class="project-detail-text">
+          I calibrated this explicitly, running population counts under strict-to-loose rule variants to find the threshold where clinical validity held without excluding patients whose evidence was simply recorded differently. This sensitivity analysis was the difference between a pipeline that finds nothing and one that finds the right signal.
+        </p>
+        <p class="project-detail-text">
+          From there: structured event tables (patient x day x clinical events), vectorized into numerical tensors for clustering. K-means over three clusters, chosen after evaluating clustering algorithms against the data's structure. The final step was an LLM agent that translated cluster centroids back into clinical narratives. Which clusters showed treatment patterns consistent with genuine sepsis, and which showed insufficient clinical evidence in the claims. Statistical clusters don't move clinical stakeholders. Narratives do.
         </p>
 
-        <p class="project-detail-text">
-          The final piece was interpretability. Statistical clusters don't persuade clinical stakeholders — narratives do. I built an LLM agent to analyze the event patterns within each cluster and generate human-readable summaries of what distinguished each group. The entire analysis was packaged into a replicable pipeline for application to other fraud detection cases.
-        </p>
       </section>
 
-      <section class="project-detail-section">
-        <h2 class="project-detail-section-title">Architecture</h2>
-        <div class="architecture-embed">
-          <img src="diagrams/Sepsis workflow fitted.png" alt="Clinical Fraud Detection Pipeline Architecture" onclick="openLightbox(this.src)">
-        </div>
-      </section>
+      
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Impact</h2>
         <ul class="project-detail-list">
-          <li><strong>~30% of admissions</strong> flagged as "unlikely sepsis," warranting further investigation</li>
-          <li><strong>$1.8 million recovered</strong> after a large insurance plan's independent audit validated findings through manual chart reviews of 100 randomly sampled hospitals</li>
-          <li>Proved that group-level patterns can prompt insurers to investigate their own markets — even when data is too incomplete for individual provider attribution</li>
-          <li>Methodology described as "groundbreaking and novel" by the Chief Medical Officer</li>
+          <li><strong>~30% of admissions</strong> flagged as "unlikely sepsis"</li>
+          <li><strong>$1.8 million recovered</strong> after independent audit validated findings through manual chart review of 100 hospitals</li>
+          <li>Methodology proved group-level pattern detection works on data everyone assumed was insufficient
+</li>
+          <li>Sole technical contributor across the full pipeline</li>
         </ul>
       </section>
 

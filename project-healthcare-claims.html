@@ -35,8 +35,8 @@
 
       <section class="project-detail-header">
         <a href="projects.html" class="project-detail-back">← Back to work</a>
-        <h1 class="project-detail-title">Healthcare Claims Database Agent</h1>
-        <p class="project-detail-tagline">Self-service analytics for a 200-table healthcare claims database — now used daily for executive reporting</p>
+        <h1 class="project-detail-title">Healthcare Claims Query Agent</h1>
+        <p class="project-detail-tagline">Text-to-SQL on a 200+ table insurance claims database. ~85% accuracy. Outputs used directly in executive reports.</p>
 
         <div class="project-detail-impact">
           <div class="impact-item">
@@ -54,68 +54,59 @@
         </div>
 
         <div class="project-detail-tags">
+          <span class="tag">Multi-Agent System</span>
           <span class="tag">Text-to-SQL</span>
           <span class="tag">RAG</span>
-          <span class="tag">Medical Coding</span>
-          <span class="tag">LangChain</span>
-          <span class="tag">Vector DB</span>
-          <span class="tag">Snowflake</span>
+          <span class="tag">Full-Stack</span>
+          <span class="tag">Production</span>
         </div>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Problem</h2>
         <p class="project-detail-text">
-          Healthcare claims databases are notoriously complex: hundreds of tables, arcane medical coding systems (ICD, CPT, NDC), and business logic that varies by claim type, time period, and payer. At our organization, every analytical question — no matter how simple — required an analyst to manually write SQL. Business users waited hours or days for answers. Analysts spent their time on repetitive queries instead of strategic work.
+          Every analytical question against insurance claims database required a human analyst writing SQL — hours per query, days for complex ones. The database had hundreds of tables, four medical coding systems (ICD-10, CPT, DRG, GPI), and business logic that changes depending on claim type, table, and context.
         </p>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Insight</h2>
         <p class="project-detail-text">
-          The conventional approach to text-to-SQL treats it as a translation problem: take natural language, output SQL. But claims databases don't work that way. The same question — "show me inpatient costs" — requires completely different SQL depending on which table you query, which codes you use, and which business rules apply.
+          Text-to-SQL is usually treated as translation: natural language in, SQL out. That fails on claims data because the same question requires different SQL depending on which table you hit, which code system you filter on, and which business rules apply.
+The reframe: SQL generation is a sequence of constrained decisions, not a monolithic translation. Each decision — table selection, join logic, filter strategy, calculation method — has its own failure modes and its own context requirements. Decompose them, and you can debug, evaluate, and improve each one independently.
         </p>
-        <p class="project-detail-text">
-          I reframed the problem: text-to-SQL isn't translation, it's <strong>decision-making</strong>. Writing a correct query requires dozens of sequential choices — which table, which join, which code system, which calculation method. Each choice is small enough to control and debug independently. Rather than asking an LLM to solve everything at once, I built a system that makes these decisions explicit, traceable, and correctable.
-        </p>
-        <p class="project-detail-text">
-          This meant the system could explain <em>why</em> it wrote the SQL it did — which matters when business users are putting outputs directly into board presentations.
-        </p>
+        <p>The architecture below reflects this decomposition — each phase isolates a class of decisions with its own context and failure modes.</p>
+      </section>
+      <section class="project-detail-section">
+        <h2 class="project-detail-section-title">Architecture</h2>
+        <div class="architecture-embed">
+          <img src="diagrams/ndw.png" alt="Healthcare Claims Text-to-SQL Agent Architecture" onclick="openLightbox(this.src)">
+        </div>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Technical Approach</h2>
 
         <p class="project-detail-text">
-          The core architecture decomposes each query into discrete decision points. When a user asks about hospital costs, the system first determines claim type (inpatient vs. outpatient), then selects the appropriate table, then identifies the right medical codes, then applies the correct calculation logic. An orchestration layer compiles these decisions into coherent SQL, maintaining clear traceability — when something breaks, I know exactly which decision was responsible.
+          Why decompose? Left unconstrained, the LLM defaults to the largest available table and the most granular filter — ICD-10 codes for inpatient queries when DRG is the correct abstraction, or filtering on all 7 GPI levels for pharmacy when only GPI-2 and GPI-4 matter. Each SQL decision node receives only the context it needs to make its specific choice correctly.
+Context retrieval as a parallel system. The question is embedded once, then used across six vector searches simultaneously — drug codes, procedures, diagnoses, DRGs, few-shot examples, and a 1000+ column data dictionary via hybrid vector/keyword search. This front-loads the domain knowledge the decision nodes need without overloading any single prompt.
+Input quality matters. Users type abbreviations, vague follow-ups, incomplete references. A reformulation step expands and resolves these before anything downstream touches them — reducing the cognitive load on users while giving the system cleaner requirements to work with.
+Self-correction on execution. Failed queries get rerouted with the error code as context. Usually fixed in one retry. Capped at five.
         </p>
 
-        <p class="project-detail-text">
-          I built comprehensive tooling for the domain complexity that makes healthcare claims uniquely difficult. This includes lookup tools for ICD, CPT, and NDC codes; logic handlers for claim type selection and table joins; and retrieval from a vector database of validated SQL examples. The system uses prompts and few-shot examples to ensure consistent application of business rules across queries. A self-correction mechanism attempts up to five iterations to fix execution errors before returning results.
-        </p>
-
-        <p class="project-detail-text">
-          To close the feedback loop, I built an evaluation dashboard tracking user engagement and AI-generated gap analysis, plus an automated SQL judge that replaced manual review of unit tests. I designed and implemented the entire UI myself — custom CSS and HTML — since there was no UI developer on the team. The dashboard gave me visibility into both usage patterns and quality gaps, enabling targeted improvements that drove accuracy from early iterations to production-ready performance.
-        </p>
+        
       </section>
 
-      <section class="project-detail-section">
-        <h2 class="project-detail-section-title">Architecture</h2>
-        <div class="architecture-embed">
-          <img src="diagrams/ndw_diagram.png" alt="Healthcare Claims Text-to-SQL Agent Architecture">
-        </div>
-      </section>
+      
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Impact</h2>
         <ul class="project-detail-list">
           <li><strong>~85% accuracy</strong> on complex healthcare claims queries</li>
           <li><strong>40% productivity increase</strong> among users who adopted the system</li>
-          <li><strong>~12.5% adoption</strong> among target users (~5 daily active users out of ~40 whose work requires claims data)</li>
-          <li>Business users query directly instead of waiting for analyst responses</li>
           <li>Outputs used in <strong>executive slide decks and reports</strong></li>
-          <li>Transformed claims database access from analyst-dependent bottleneck to self-service capability</li>
-          <li>System later incorporated into larger insight generation architecture</li>
+          <li>Sole engineer: architecture through frontend</strong></li>
+          
         </ul>
       </section>
 
@@ -134,10 +125,134 @@
     </footer>
   </main>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <div class="lightbox-container" id="lightbox-container">
+      <img id="lightbox-img" src="" alt="" draggable="false">
+    </div>
+  </div>
+
   <script>
     function toggleNav() {
       document.getElementById('navLinks').classList.toggle('active');
     }
+
+    var lbScale = 1;
+    var lbTranslateX = 0;
+    var lbTranslateY = 0;
+    var isDragging = false;
+    var dragStartX, dragStartY, startTranslateX, startTranslateY;
+    var MIN_SCALE = 1;
+    var MAX_SCALE = 5;
+
+    function openLightbox(src) {
+      var lb = document.getElementById('lightbox');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      applyTransform();
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function applyTransform() {
+      var img = document.getElementById('lightbox-img');
+      img.style.transform = 'translate(' + lbTranslateX + 'px, ' + lbTranslateY + 'px) scale(' + lbScale + ')';
+    }
+
+    function handleLightboxClick(e) {
+      if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    }
+
+    document.getElementById('lightbox').addEventListener('wheel', function(e) {
+      e.preventDefault();
+      var delta = e.deltaY > 0 ? -0.15 : 0.15;
+      var newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+      if (newScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
+      lbScale = newScale;
+      applyTransform();
+    }, { passive: false });
+
+    document.getElementById('lightbox-img').addEventListener('dblclick', function(e) {
+      e.stopPropagation();
+      if (lbScale > 1) { lbScale = 1; lbTranslateX = 0; lbTranslateY = 0; }
+      else { lbScale = 2.5; }
+      applyTransform();
+    });
+
+    document.getElementById('lightbox-img').addEventListener('mousedown', function(e) {
+      if (lbScale <= 1) return;
+      e.preventDefault();
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      startTranslateX = lbTranslateX;
+      startTranslateY = lbTranslateY;
+      document.getElementById('lightbox-img').style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      lbTranslateX = startTranslateX + (e.clientX - dragStartX);
+      lbTranslateY = startTranslateY + (e.clientY - dragStartY);
+      applyTransform();
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      var img = document.getElementById('lightbox-img');
+      if (img) img.style.cursor = '';
+    });
+
+    var lastTouchDist = 0;
+    document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        lastTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      } else if (e.touches.length === 1 && lbScale > 1) {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX;
+        dragStartY = e.touches[0].clientY;
+        startTranslateX = lbTranslateX;
+        startTranslateY = lbTranslateY;
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        var delta = (dist - lastTouchDist) * 0.01;
+        lbScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+        if (lbScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
+        lastTouchDist = dist;
+        applyTransform();
+      } else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        lbTranslateX = startTranslateX + (e.touches[0].clientX - dragStartX);
+        lbTranslateY = startTranslateY + (e.touches[0].clientY - dragStartY);
+        applyTransform();
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchend', function() {
+      isDragging = false;
+      lastTouchDist = 0;
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
   </script>
 </body>
 </html>

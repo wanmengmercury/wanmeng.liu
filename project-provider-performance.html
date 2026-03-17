@@ -35,109 +35,67 @@
 
       <section class="project-detail-header">
         <a href="projects.html" class="project-detail-back">← Back to work</a>
-        <h1 class="project-detail-title">Provider Performance Agent</h1>
-        <p class="project-detail-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
+        <h1 class="project-detail-title">Multi-Agent Analytics Platform for Provider Network Optimization</h1>
+        <p class="project-detail-tagline">I designed and deployed a production AI system after an off-the-shelf solution failed at 25% accuracy. Four specialized agent paths, 10 GEPA-evolved LLMs, one unified interface.</p>
 
-        <div class="project-detail-impact">
-          <div class="impact-item">
-            <span class="impact-value">&lt;20s</span>
-            <span class="impact-label">response time</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">6-9×</span>
-            <span class="impact-label">faster evaluation</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">Full-stack</span>
-            <span class="impact-label">ownership</span>
-          </div>
-        </div>
-
+  
         <div class="project-detail-tags">
-          <span class="tag">Text-to-SQL</span>
-          <span class="tag">Multi-Agent</span>
+          <span class="tag">Python</span>
+          <span class="tag">Claude Sonnet</span>
+          <span class="tag">AWS Bedrock</span>
+          <span class="tag">DSPy</span>
           <span class="tag">Snowflake</span>
           <span class="tag">Streamlit</span>
-          <span class="tag">LangChain</span>
-          <span class="tag">GEPA Optimization</span>
         </div>
       </section>
 
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">The Problem</h2>
         <p class="project-detail-text">
-          Healthcare organizations sit on rich provider performance data — cost efficiency, care appropriateness, quality metrics — but accessing it requires analysts who understand both the business logic and the underlying data model. Business users wait days for answers. Analysts spend hours on repetitive queries instead of deep analysis.
-        </p>
-        <p class="project-detail-text">
-          The obvious solution is natural language querying, but enterprise AI platforms consistently fail on complex proprietary datasets. When I evaluated Snowflake Intelligence on the provider performance data, the accuracy gaps were immediately disqualifying.
+          The starting point was a commercial text-to-SQL solution that hit ~25% accuracy on provider performance queries. Unusable. The domain logic was too proprietary: calculation rules that change year-over-year, distinctions like servicing vs. billing provider, member-level vs. claim-level counting. No pre-trained LLM model knows this. Off-the-shelf solution underperformed, so I designed and built a custom system from scratch.
         </p>
       </section>
 
       <section class="project-detail-section">
-        <h2 class="project-detail-section-title">The Insight</h2>
+        <h2 class="project-detail-section-title">What I Designed</h2>
         <p class="project-detail-text">
-          Most text-to-SQL systems treat query generation as a single problem: user question in, SQL out. When the query fails, you're left debugging a black box. I realized that writing a correct query isn't one decision — it's a sequence of discrete decisions, each with its own failure modes:
-        </p>
-        <ul class="project-detail-list">
-          <li>Which tables contain the relevant data?</li>
-          <li>How should they be joined?</li>
-          <li>What filters apply to this question?</li>
-          <li>Which metrics need calculation, and what's the correct formula?</li>
-          <li>How should results be aggregated and ordered?</li>
-        </ul>
-        <p class="project-detail-text">
-          By decomposing the problem this way, I could build an orchestration layer that makes each decision explicit and traceable. When a query returns wrong results, I know exactly which decision failed — was it table selection? Join logic? A calculation rule applied incorrectly? This traceability transformed debugging from guesswork into systematic diagnosis.
+          I architected four agent paths behind a single conversational interface, each solving a different class of question:
         </p>
         <p class="project-detail-text">
-          The second insight came during a compliance-driven platform migration. The organization was stuck in an unresolved argument: AWS services offered better AI capabilities, but Snowflake satisfied compliance requirements. I recognized this as a false binary. By mapping the architectural dependencies carefully, I found a migration path that preserved the text-to-SQL accuracy (the core value) while accepting some degradation in document retrieval performance (a secondary feature). This tradeoff broke the deadlock — not by finding a perfect solution, but by making the costs and benefits explicit enough that stakeholders could align.
+          I broke the text-to-SQL problem into 10 independent decision-point LLMs: one for join logic, one for WHERE clauses, one for specialty filters, one for count semantics, and so on — rather than forcing a single prompt to handle everything. This decomposition was deliberate: when accuracy drops, I can trace the failure to a specific decision point and fix it in isolation. I built a self-correcting layer on top that validates and rewrites assembled SQL before execution.
         </p>
-      </section>
-
-      <section class="project-detail-section">
-        <h2 class="project-detail-section-title">Technical Approach</h2>
-
         <p class="project-detail-text">
-          <strong>Architecture.</strong> I built a master routing agent that receives user questions and directs them to specialized components: a SQL-generation agent for data queries, a document-retrieval agent for policy and methodology questions, or a decline response when the question falls outside scope. This consolidation meant users had one interface for all provider performance needs, rather than context-switching between tools.
+          For document retrieval, I designed a multi-knowledgebase architecture with ~10 domain-specific KBs rather than one monolithic index. I separated KBs by document type because I discovered that methodology docs from consecutive years look nearly identical to embedding models but must rank equally for year-over-year comparison. Mixing them into one index buried older versions. Partitioning solved this.
         </p>
-
         <p class="project-detail-text">
-          <strong>Decision decomposition.</strong> The SQL agent doesn't generate queries in one shot. It works through a structured sequence: identifying relevant tables, determining join paths, selecting appropriate filters, applying calculation rules, and composing the final query. Each step produces an intermediate artifact I can inspect. An orchestration layer compiles these decisions into executable SQL while maintaining full traceability.
+          I also built a scenario modeling path. It is a form-guided simulation backed by a linear solver that lets users test how per-member-per-year cost shifts under different provider/network configurations.
         </p>
-
         <p class="project-detail-text">
-          <strong>Self-correction loop.</strong> Queries that fail execution enter a correction cycle — up to five iterations of error analysis and query revision before returning results or acknowledging failure. This significantly improved success rates on complex questions without sacrificing transparency about what the system can and cannot do.
-        </p>
-
-        <p class="project-detail-text">
-          <strong>Dual-audience design.</strong> Business users need answers and understand filters but don't write SQL. Analytical users need the SQL itself to verify logic or extend the analysis. I designed outputs to serve both: natural language summaries with the underlying query available on demand. This wasn't just a UI decision — it shaped how I structured the agent's reasoning to remain interpretable at every step.
-        </p>
-
-        <p class="project-detail-text">
-          <strong>Full-stack ownership.</strong> With no UI developer on the team, I built the entire frontend — starting with custom CSS/HTML injections in Streamlit. The application handles conversation history, result visualization, feedback capture, and usage analytics.
-        </p>
-
-        <p class="project-detail-text">
-          <strong>Evaluation infrastructure.</strong> I built an automated SQL judge that evaluates unit test results against expected outputs, reducing evaluation time from 2-3 hours of manual review to 20 minutes of human oversight. Faster feedback loops meant faster iteration and higher final accuracy.
+          The diagram below shows the full system.
         </p>
       </section>
-
       <section class="project-detail-section">
         <h2 class="project-detail-section-title">Architecture</h2>
         <div class="architecture-embed">
-          <iframe src="diagrams/provider-performance-architecture.html" title="Provider Performance Agent Architecture"></iframe>
+          <img src="diagrams/provider ai.png" alt="Provider Performance Agent Architecture" onclick="openLightbox(this.src)">
         </div>
       </section>
 
       <section class="project-detail-section">
-        <h2 class="project-detail-section-title">Impact</h2>
-        <ul class="project-detail-list">
-          <li><strong>Dramatically outperformed Snowflake Intelligence</strong> on provider performance data — accuracy differences led to strategic decision to build on custom architecture rather than enterprise platform</li>
-          <li><strong>Resolved organizational deadlock</strong> on environment requirements by executing AWS-to-Snowflake migration that satisfied compliance while preserving core functionality</li>
-          <li><strong>Enabled self-service querying</strong> for both business users (who previously waited for analyst support) and analytical users (who now get query logic they can verify and extend)</li>
-          <li><strong>6-9× speedup in evaluation cycles</strong> through automated SQL judge, enabling rapid iteration during development</li>
-          <li><strong>Sub-20-second response time</strong> on queries that previously took analysts minutes to hours</li>
-        </ul>
+        <h2 class="project-detail-section-title">How I Scaled Prompt Engineering with GEPA</h2>
+
+        <p class="project-detail-text">
+          10 LLMs means 10 prompts, each encoding proprietary logic that exists nowhere in any model's pretraining. I couldn't hand-tune all of them. So I built a self-improving training loop using GEPA (Genetic-Pareto optimization via DSPy).
+        </p>
+        <p class="project-detail-text">
+          I started with 20 hand-written positive and negative examples per LLM. GEPA evolves candidate prompts through reflective mutation: it reads execution traces to diagnose why a prompt failed, then proposes targeted fixes which are not random perturbation. I scored candidates via cosine similarity against ground truth, then human-reviewed rollout outputs to catch domain-incorrect rules GEPA proposed. Verified outputs became new training data; wrong-but-close outputs I corrected manually and fed back in. Each cycle gave me better prompts and a larger dataset.
+        </p>
+        <p class="project-detail-text">
+          This workflow is what let me optimize 10 prompts simultaneously and push accuracy from 25% to 70% in one week — instead of spending that week hand-picking words and examples for a single prompt.
+        </p>
       </section>
+
+      
 
     </div>
 
@@ -154,10 +112,134 @@
     </footer>
   </main>
 
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <div class="lightbox-container" id="lightbox-container">
+      <img id="lightbox-img" src="" alt="" draggable="false">
+    </div>
+  </div>
+
   <script>
     function toggleNav() {
       document.getElementById('navLinks').classList.toggle('active');
     }
+
+    var lbScale = 1;
+    var lbTranslateX = 0;
+    var lbTranslateY = 0;
+    var isDragging = false;
+    var dragStartX, dragStartY, startTranslateX, startTranslateY;
+    var MIN_SCALE = 1;
+    var MAX_SCALE = 5;
+
+    function openLightbox(src) {
+      var lb = document.getElementById('lightbox');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      lbScale = 1;
+      lbTranslateX = 0;
+      lbTranslateY = 0;
+      applyTransform();
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function applyTransform() {
+      var img = document.getElementById('lightbox-img');
+      img.style.transform = 'translate(' + lbTranslateX + 'px, ' + lbTranslateY + 'px) scale(' + lbScale + ')';
+    }
+
+    function handleLightboxClick(e) {
+      if (e.target === document.getElementById('lightbox') || e.target.classList.contains('lightbox-close')) {
+        closeLightbox();
+      }
+    }
+
+    document.getElementById('lightbox').addEventListener('wheel', function(e) {
+      e.preventDefault();
+      var delta = e.deltaY > 0 ? -0.15 : 0.15;
+      var newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+      if (newScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
+      lbScale = newScale;
+      applyTransform();
+    }, { passive: false });
+
+    document.getElementById('lightbox-img').addEventListener('dblclick', function(e) {
+      e.stopPropagation();
+      if (lbScale > 1) { lbScale = 1; lbTranslateX = 0; lbTranslateY = 0; }
+      else { lbScale = 2.5; }
+      applyTransform();
+    });
+
+    document.getElementById('lightbox-img').addEventListener('mousedown', function(e) {
+      if (lbScale <= 1) return;
+      e.preventDefault();
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragStartY = e.clientY;
+      startTranslateX = lbTranslateX;
+      startTranslateY = lbTranslateY;
+      document.getElementById('lightbox-img').style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      lbTranslateX = startTranslateX + (e.clientX - dragStartX);
+      lbTranslateY = startTranslateY + (e.clientY - dragStartY);
+      applyTransform();
+    });
+
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+      var img = document.getElementById('lightbox-img');
+      if (img) img.style.cursor = '';
+    });
+
+    var lastTouchDist = 0;
+    document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        lastTouchDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+      } else if (e.touches.length === 1 && lbScale > 1) {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX;
+        dragStartY = e.touches[0].clientY;
+        startTranslateX = lbTranslateX;
+        startTranslateY = lbTranslateY;
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        var dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        var delta = (dist - lastTouchDist) * 0.01;
+        lbScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, lbScale + delta));
+        if (lbScale === MIN_SCALE) { lbTranslateX = 0; lbTranslateY = 0; }
+        lastTouchDist = dist;
+        applyTransform();
+      } else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        lbTranslateX = startTranslateX + (e.touches[0].clientX - dragStartX);
+        lbTranslateY = startTranslateY + (e.touches[0].clientY - dragStartY);
+        applyTransform();
+      }
+    }, { passive: false });
+
+    document.getElementById('lightbox').addEventListener('touchend', function() {
+      isDragging = false;
+      lastTouchDist = 0;
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
   </script>
 </body>
 </html>

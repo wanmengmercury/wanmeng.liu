@@ -36,38 +36,23 @@
       <div class="page-header">
         <h1 class="page-title">Selected Work</h1>
         <p class="page-description">
-          Enterprise AI systems built end-to-end — from stakeholder discovery through production deployment.
+          These are systems I designed and built. Each write-up covers the
+  architecture, the technical decisions, and why I made them.
         </p>
       </div>
 
       <!-- Project 1 -->
       <a href="project-provider-performance.html" class="project-entry" style="display: block;">
         <span class="project-entry-number">01</span>
-        <h2 class="project-entry-title">Provider Performance Agent</h2>
-        <p class="project-entry-tagline">Outperformed Snowflake Intelligence by decomposing text-to-SQL into traceable decision points</p>
-        <p class="project-entry-description">
-          Built a text-to-SQL system for provider performance data that dramatically outperformed Snowflake's enterprise platform. Key innovation: treating query generation as a sequence of discrete decisions — table selection, join logic, filters, calculations — each traceable and debuggable independently. Led AWS-to-Snowflake migration that resolved organizational deadlock on compliance requirements.
-        </p>
-        <div class="project-entry-impact">
-          <div class="impact-item">
-            <span class="impact-value">&lt;20s</span>
-            <span class="impact-label">response time</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">6-9×</span>
-            <span class="impact-label">faster evaluation</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">Full-stack</span>
-            <span class="impact-label">Python</span>
-          </div>
-        </div>
+        <h2 class="project-entry-title">Multi-Agent Analytics Platform for Provider Network Optimization</h2>
+        <p class="project-entry-tagline">I designed and deployed a production AI system after an off-the-shelf solution failed at 25% accuracy. Four specialized agent paths, 10 GEPA-evolved LLMs, one unified interface.</p>
+
         <div class="project-entry-tags">
+          <span class="tag">Multi-Agent Systems</span>
           <span class="tag">Text-to-SQL</span>
-          <span class="tag">Multi-Agent</span>
-          <span class="tag">Snowflake</span>
-          <span class="tag">Streamlit</span>
-          <span class="tag">GEPA Optimization</span>
+          <span class="tag">Prompt Optimization</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Healthcare Analytics</span>
         </div>
         <span class="project-entry-link">View case study →</span>
       </a>
@@ -77,28 +62,11 @@
         <span class="project-entry-number">02</span>
         <h2 class="project-entry-title">Sepsis Billing Fraud Detection</h2>
         <p class="project-entry-tagline">Proving what "incomplete" data can reveal — $1.8M recovered</p>
-        <p class="project-entry-description">
-          Reframed an "impossible" fraud detection problem. The accepted blocker was insufficient clinical data for individual provider attribution. I proposed a different approach: prove that patterns exist at scale that warrant investigation, shifting the burden of proof. Built an end-to-end pipeline combining ML clustering with LLM interpretation to generate actionable investigation targets from incomplete claims data.
-        </p>
-        <div class="project-entry-impact">
-          <div class="impact-item">
-            <span class="impact-value">$1.8M</span>
-            <span class="impact-label">recovered</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">~30%</span>
-            <span class="impact-label">flagged for review</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">Novel</span>
-            <span class="impact-label">methodology</span>
-          </div>
-        </div>
         <div class="project-entry-tags">
-          <span class="tag">K-Means Clustering</span>
-          <span class="tag">LLM Agent</span>
-          <span class="tag">Vector Embeddings</span>
-          <span class="tag">Claims Data</span>
+          <span class="tag">Fraud Detection</span>
+          <span class="tag">Clustering</span>
+          <span class="tag">LLM Agents</span>
+          <span class="tag">Healthcare Claims</span>
         </div>
         <span class="project-entry-link">View case study →</span>
       </a>
@@ -107,30 +75,14 @@
       <a href="project-healthcare-claims.html" class="project-entry" style="display: block;">
         <span class="project-entry-number">03</span>
         <h2 class="project-entry-title">Healthcare Claims Database Agent</h2>
-        <p class="project-entry-tagline">Self-service analytics for a 200-table healthcare claims database — now used daily for executive reporting</p>
-        <p class="project-entry-description">
-          Architected a production text-to-SQL system for one of the most complex data domains: healthcare claims with hundreds of tables, arcane medical coding systems (ICD, CPT, NDC), and business logic that varies by claim type, time period, and payer. Transformed claims database access from an analyst-dependent bottleneck to self-service capability.
-        </p>
-        <div class="project-entry-impact">
-          <div class="impact-item">
-            <span class="impact-value">~85%</span>
-            <span class="impact-label">accuracy</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">40%</span>
-            <span class="impact-label">productivity increase</span>
-          </div>
-          <div class="impact-item">
-            <span class="impact-value">200+</span>
-            <span class="impact-label">tables</span>
-          </div>
-        </div>
+        <p class="project-entry-tagline">Text-to-SQL on a 200+ table insurance claims database. ~85% accuracy. Outputs used directly in executive reports.</p>
+        
         <div class="project-entry-tags">
+          <span class="tag">Multi-Agent System</span>
           <span class="tag">Text-to-SQL</span>
           <span class="tag">RAG</span>
-          <span class="tag">Medical Coding</span>
-          <span class="tag">LangChain</span>
-          <span class="tag">Vector DB</span>
+          <span class="tag">Full-Stack</span>
+          <span class="tag">Production</span>
         </div>
         <span class="project-entry-link">View case study →</span>
       </a>
