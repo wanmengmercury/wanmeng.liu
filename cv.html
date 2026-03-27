@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV — Wanmeng Liu</title>
-  <meta name="description" content="AI Engineer specializing in multi-agent systems, text-to-SQL, and enterprise healthcare AI. M.S. Georgia Tech.">
+  <meta name="description" content="AI Engineer building production agentic systems and evaluation frameworks for high-stakes domains. M.S. Georgia Tech.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
       </div>
 
       <p class="cv-summary">
-        AI Engineer who builds agentic systems that ship. Specialized in text-to-SQL and multi-agent architectures for enterprise healthcare — domains where data is messy, logic is complex, and demos don't survive production. Two generations of systems in daily production use, outperforming Snowflake Intelligence. Published researcher (BMC Public Health).
+        AI Engineer who builds agentic systems that ship. Built two generations of production text-to-SQL and multi-agent systems in enterprise healthcare — a safety-critical domain where data is messy, logic is complex, and demos don't survive contact with production. Designed the evaluation methodology, gold-standard benchmarks, and platform-agnostic architecture now serving as the baseline across multiple production deployments. I think in evaluation frameworks and decomposed decision points, not prompt tricks. Published researcher (BMC Public Health).
       </p>
 
       <!-- Professional Experience -->
@@ -71,26 +71,30 @@
 
             <p class="cv-project-label">Provider Performance Agent</p>
             <ul class="cv-entry-list">
-              <li>Architected and deployed end-to-end text-to-SQL agentic system as lead engineer — enabling natural language queries across proprietary provider performance metrics (cost, appropriateness, quality), achieving ~85% accuracy where Snowflake Intelligence scored ~20% and driving strategic platform decision</li>
-              <li>Built master routing agent orchestrating document retrieval, SQL generation, and guardrails into a single application serving dual audiences: business users who need answers and analysts who need accelerated SQL</li>
-              <li>Decomposed text-to-SQL into discrete, debuggable decision points with self-correcting query mechanism; parallelized retrieval reducing response time to &lt;20 seconds versus hours for human analysts</li>
-              <li>Designed and shipped full-stack application (Python backend, Streamlit & CSS & HTML frontend) — architecture through UI, no dedicated frontend engineer</li>
+              <li>Architected and deployed end-to-end text-to-SQL agentic system as lead engineer — orchestrating model inference, retrieval, and structured reasoning (LangChain, LangGraph, DSPy) to replace rule-based analyst workflows with learned evaluation, achieving ~85% accuracy where the incumbent vendor solution scored ~20%</li>
+              <li>Built master routing agent coordinating document retrieval, SQL generation, and guardrails into a unified application serving dual audiences: business users who need answers and analysts who need accelerated SQL</li>
+              <li>Developed meta-evaluation methodology (evaluation-of-evaluation): SQL judge and GEPA prompt optimization framework to systematically verify evaluator correctness, reducing evaluation cycles from 2-3 hours to 20 minutes</li>
+              <li>Built golden-set benchmarks and iterative calibration loops by curating golden reference query sets, instrumenting experiment tracking across prompt and tooling variations, and running A/B comparisons to isolate accuracy drivers</li>
+              <li>Decomposed complex inference into discrete, debuggable decision points with self-correcting query mechanism; parallelized retrieval reducing response time to &lt;20 seconds versus hours for human analysts</li>
               <li>Led full-stack migration from AWS (Bedrock, Knowledge Base, S3, Athena) to Snowflake-native architecture (Cortex LLM, Cortex Search, embedding models), resolving organizational deadlock on compliance requirements</li>
-              <li>Built automated evaluation pipeline: GEPA prompt optimization for systematic accuracy improvement, SQL judge reducing evaluation cycles from 2-3 hours to 20 minutes</li>
+              <li>Shipped full-stack application (Python backend, Streamlit frontend) — engineered production-grade UI through custom HTML/CSS injection and original design work, delivering a polished interface indistinguishable from dedicated frontend engineering without a frontend engineer or designer on the team</li>
+
             </ul>
 
             <p class="cv-project-label">Sepsis Billing Fraud Detection</p>
             <ul class="cv-entry-list">
-              <li>Designed novel fraud detection methodology proving group-level upcoding patterns could be identified from incomplete claims data — reframing a problem the industry typically considers blocked by insufficient clinical detail</li>
-              <li>Collaborated with chief medical officer to scope approach: built event tables defining 5 clinical traits distinguishing true sepsis from potential upcoding, constructed entirely from bundled claims with incomplete CPT and revenue codes</li>
-              <li>Developed end-to-end pipeline: vectorized patient event sequences, applied k-means clustering to surface 3 distinct admission patterns, and built LLM agent to translate statistical clusters into actionable narratives</li>
+              <li>Designed novel fraud detection methodology proving group-level upcoding patterns could be identified from incomplete claims data — reframing a problem the industry considers blocked by insufficient clinical detail</li>
+              <li>Built end-to-end inference pipeline: vectorized patient event sequences, applied k-means clustering to surface 3 distinct admission patterns, and developed LLM agent to translate statistical clusters into actionable narratives</li>
               <li>~30% of admissions flagged as "unlikely sepsis"; independent audit by a major insurance company validated findings through manual chart review of 100 hospitals, recovering $1.8M</li>
               <li>Sole technical contributor across the full pipeline — event tables, clustering, agent development, pattern interpretation</li>
             </ul>
 
             <p class="cv-project-label">Leadership & Team Development</p>
             <ul class="cv-entry-list">
-              <li>Own all technical hiring for the GenAI team: designed Python and SQL coding challenges used in every interview, screened 10+ candidates across data scientist and analyst roles, mentor new hires, and set team coding standards</li>
+              <li>Designed platform-agnostic agent architecture with abstraction layers for LLM providers (Bedrock, Cortex), data sources (S3, Snowflake Stage, Athena), and deployment targets (EC2, Snowflake containers) — codebase adopted as the baseline for two subsequent production systems without re-architecture</li>
+              <li>Mentored team on building for enterprise volatility: how to design modular systems that absorb changing platform mandates, requirements, and deployment constraints rather than requiring rewrites</li>
+              <li>Own all technical hiring for the GenAI team: designed Python and SQL coding challenges used in every interview, screened 10+ candidates, and set team coding standards</li>
+
             </ul>
           </div>
 
@@ -103,10 +107,10 @@
 
             <p class="cv-project-label">Healthcare Claims Agent</p>
             <ul class="cv-entry-list">
-              <li>Pioneered the company's first production text-to-SQL system on healthcare claims data (hundreds of tables) — the inherently harder domain requiring medical code resolution, claim type routing, and business logic that changes per query context</li>
-              <li>Developed comprehensive tooling layer: ICD/CPT/NDC code lookup, claims logic arbitration (inpatient vs. outpatient, join selection, calculation rules), and vector-based retrieval for few-shot SQL examples</li>
-              <li>Designed evaluation infrastructure surfacing usage patterns and quality gaps; built iterative improvement loop from user feedback to targeted prompt and tooling fixes</li>
-              <li>Achieved ~85% accuracy on complex claims queries; ~12.5% adoption among target users, with outputs used directly in executive slide decks and reports</li>
+              <li>Pioneered the company's first production text-to-SQL system on healthcare claims data (hundreds of tables) — coordinating model inference, multi-source retrieval, and domain-specific reasoning across medical code resolution, claim type routing, and per-query business logic </li>
+              <li>Developed comprehensive tooling layer: ICD/CPT/NDC code lookup, claims logic arbitration (inpatient vs. outpatient, join selection, calculation rules), and vector-based retrieval for few-shot SQL examples </li>
+              <li>Designed the company's first gold-standard evaluation dataset and assessment pipeline for text-to-SQL — establishing the benchmarking methodology and feedback-driven improvement process later scaled to the Provider Performance system</li>
+              <li>Achieved ~85% accuracy on complex claims queries; ~12.5% adoption among target users, with outputs used directly in weekly executive slide decks and reports</li>
             </ul>
           </div>
         </div>

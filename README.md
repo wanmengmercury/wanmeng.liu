@@ -173,3 +173,7 @@ Before uploading, verify you have:
 - [ ] `diagrams/provider-performance-architecture.html`
 - [ ] `diagrams/sepsis-architecture.html`
 - [ ] `diagrams/healthcare-claims-architecture.html`
+
+# how to run 
+  cd /Users/mercuryliu/Documents/portfolio-site
+  python3 -m http.server 8000
