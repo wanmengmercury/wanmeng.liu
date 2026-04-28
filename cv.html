@@ -47,10 +47,6 @@
         </div>
       </div>
 
-      <p class="cv-summary">
-        AI Engineer who builds agentic systems that ship. Built two generations of production text-to-SQL and multi-agent systems in enterprise healthcare — a safety-critical domain where data is messy, logic is complex, and demos don't survive contact with production. Designed the evaluation methodology, gold-standard benchmarks, and platform-agnostic architecture now serving as the baseline across multiple production deployments. I think in evaluation frameworks and decomposed decision points, not prompt tricks. Published researcher (BMC Public Health).
-      </p>
-
       <!-- Professional Experience -->
       <section class="cv-section">
         <h2 class="cv-section-title">Experience</h2>
@@ -67,33 +63,44 @@
           <div style="margin-bottom: var(--s-7);">
             <div class="cv-entry-header">
               <p class="cv-entry-role">Senior Data Scientist</p>
-              <span class="cv-entry-date">April 2026 – Present</span>
+              <span class="cv-entry-date">April 2026 - Present</span>
             </div>
 
             <div class="cv-entry-header">
               <p class="cv-entry-role">Data Scientist</p>
-              <span class="cv-entry-date">Nov 2024 – March 2026</span>
+              <span class="cv-entry-date">Nov 2024 - March 2026</span>
+            </div>
+
+            <div class="cv-entry-header">
+              <p class="cv-entry-role">Associate Data Scientist</p>
+              <span class="cv-entry-date">July 2022 - Oct 2024</span>
             </div>
 
 
             <p class="cv-project-label">Provider Performance Agent</p>
             <ul class="cv-entry-list">
-              <li>Architected and deployed end-to-end text-to-SQL agentic system as lead engineer — orchestrating model inference, retrieval, and structured reasoning (LangChain, LangGraph, DSPy) to replace rule-based analyst workflows with learned evaluation, achieving ~85% accuracy where the incumbent vendor solution scored ~20%</li>
-              <li>Built master routing agent coordinating document retrieval, SQL generation, and guardrails into a unified application serving dual audiences: business users who need answers and analysts who need accelerated SQL</li>
-              <li>Developed meta-evaluation methodology (evaluation-of-evaluation): SQL judge and GEPA prompt optimization framework to systematically verify evaluator correctness, reducing evaluation cycles from 2-3 hours to 20 minutes</li>
-              <li>Built golden-set benchmarks and iterative calibration loops by curating golden reference query sets, instrumenting experiment tracking across prompt and tooling variations, and running A/B comparisons to isolate accuracy drivers</li>
-              <li>Decomposed complex inference into discrete, debuggable decision points with self-correcting query mechanism; parallelized retrieval reducing response time to &lt;20 seconds versus hours for human analysts</li>
-              <li>Led full-stack migration from AWS (Bedrock, Knowledge Base, S3, Athena) to Snowflake-native architecture (Cortex LLM, Cortex Search, embedding models), resolving organizational deadlock on compliance requirements</li>
-              <li>Shipped full-stack application (Python backend, Streamlit frontend) — engineered production-grade UI through custom HTML/CSS injection and original design work, delivering a polished interface indistinguishable from dedicated frontend engineering without a frontend engineer or designer on the team</li>
+              <li>Built an agentic workflow application with an orchestration agent and two subagents for document search tasks and text-to-SQL tasks.</li>
+              <li>Built an orchestration agent that accepts natural language questions regarding a provider performance database with 3 tables and identifies the user's intent.</li>
+              <li>Built subagents for the orchestration agent to answer questions based on the intent. One of the subagents was given a tool that picks the relevant knowledge base, another tool that retrieves from individual knowledge bases, and another tool that summarizes the retrieved texts from the previous tool and provides a final answer.</li>
+              <li>Built a text-to-SQL subagent with the following capabilities: accepting natural language questions, invoking tools that write different SQL code snippets for different clauses, and returning SQL in compliance with business and database logic. The text-to-SQL subagent also has a data visualization tool for questions that require the usage of geographic data so that the user can see a choropleth.</li>
+              <li>Built a GEPA-based prompt tuning pipeline for the text-to-SQL subagent's tool prompts with a scoring metric based on cosine similarity between llm-generated and gold SQL snippets. Designed a human-in-the-loop data expansion process that grew training data from 20 seed examples per tool by generating candidates with the tuned prompt and labeling them before the next GEPA run.</li>
+              <li>Enhanced the automated evaluation framework by designing a composite metric that scored the LLM judge on both grade correctness and semantic similarity of its reasoning to a hand-curated ground truth, then used GEPA to optimize the judge's prompt against this metric.</li>
+              <li>Rewrote the frontend HTML and CSS to comply with the client's branding requirements while preserving existing functionality for prompt input, result display, and session management.</li>
+              <li>Removed all AWS Bedrock and S3 dependencies from the backend and replaced them with Snowflake Cortex and Container Services to comply with the client’s environment requirements. </li>
+              <li>Supported the DevOps team to deploy to Snowflake Container Services and to higher environments.</li>
 
             </ul>
 
-            <p class="cv-project-label">Sepsis Billing Fraud Detection</p>
+            <p class="cv-project-label">Sepsis Billing Fraud Analysis</p>
             <ul class="cv-entry-list">
-              <li>Designed novel fraud detection methodology proving group-level upcoding patterns could be identified from incomplete claims data — reframing a problem the industry considers blocked by insufficient clinical detail</li>
-              <li>Built end-to-end inference pipeline: vectorized patient event sequences, applied k-means clustering to surface 3 distinct admission patterns, and developed LLM agent to translate statistical clusters into actionable narratives</li>
-              <li>~30% of admissions flagged as "unlikely sepsis"; independent audit by a major insurance company validated findings through manual chart review of 100 hospitals, recovering $1.8M</li>
-              <li>Sole technical contributor across the full pipeline — event tables, clustering, agent development, pattern interpretation</li>
+              <li>Conducted exploratory data analysis to identify trends in sepsis and pneumonia admissions </li>
+              <li>Assessed data quality analysis on the claims data to determine if we have sufficient hospitals and admissions with the clinical traits required for the study population</li>
+              <li>Collaborated with physicians to refine the clinical rules that can be used to detect fraud on sepsis admission claims. </li>
+              <li>Built a data processing pipeline to create an event table, which captured the daily clinical events during sepsis admissions for thousands of patients.</li>
+              <li>Created vector embeddings for the event table using batch processing, then applied K-Means clustering on the vectorized event table to identify distinct types of sepsis admission. </li>
+              <li>Summarized each labeled cluster using an LLM call by inputting the pre-embedding event sequences from patients in that cluster and prompting the LLM to describe the prevalence of lab tests, antibiotic usage, and vasopressor usage. </li>
+              <li>Improved the relevance and accuracy of LLM-generated summary by token optimization, few-shot prompting, and iterative feedback from physicians. </li>
+              <li>Results of the analysis were independently validated by insurers, who later recovered $1.8 million in claim payments.</li>
             </ul>
 
             <p class="cv-project-label">Leadership & Team Development</p>
@@ -105,24 +112,20 @@
             </ul>
           </div>
 
-          <!-- Previous Role -->
           <div>
-            <div class="cv-entry-header">
-              <p class="cv-entry-role">Associate Data Scientist</p>
-              <span class="cv-entry-date">July 2022 – Nov 2024</span>
-            </div>
-
-            <p class="cv-project-label">Healthcare Claims Agent</p>
+            
+            <p class="cv-project-label">Health Insurance Claims Database agent</p>
             <ul class="cv-entry-list">
-              <li>Pioneered the company's first production text-to-SQL system on healthcare claims data (hundreds of tables) — coordinating model inference, multi-source retrieval, and domain-specific reasoning across medical code resolution, claim type routing, and per-query business logic </li>
-              <li>Developed comprehensive tooling layer: ICD/CPT/NDC code lookup, claims logic arbitration (inpatient vs. outpatient, join selection, calculation rules), and vector-based retrieval for few-shot SQL examples </li>
-              <li>Designed the company's first gold-standard evaluation dataset and assessment pipeline for text-to-SQL — establishing the benchmarking methodology and feedback-driven improvement process later scaled to the Provider Performance system</li>
-              <li>Achieved ~85% accuracy on complex claims queries; ~12.5% adoption among target users, with outputs used directly in weekly executive slide decks and reports</li>
+              <li>Built a text-to-SQL agent — orchestrating workflows, tools, subagents, few shot examples — accepting natural language questions regarding a claims database with 15 tables and returning SQL in compliance with business and database logic. The agent also had query corrector and data analyzer to answer user questions in natural language. </li>
+              <li>Added guardrails for access control using regex on agent-generated SQL. </li>
+              <li>Improved agent latency by many optimization techniques such as parallel processing, token optimization, reducing usage of subagent (ReAct) and LLM. </li>
+              <li>Built automated evaluation framework using LLM and manually-created examples of ground truths testing set. Built evaluation dashboard to track consistency, latency, and accuracy of the agent using this framework. User feedback is also added to the dashboard. Achieved 85% accuracy and 90% consistency during evaluation.</li>
+              <li>Deployed the agent in dev EC2 and exposed it as a Fast API. Also, built a frontend with Streamlit, html, and css for user login, authentication, inputting prompt, calling the deployed API backend, displaying the results, and maintaining session. Later supported DevOps team to deploy in higher environments including production environments.</li>
+
             </ul>
           </div>
         </div>
 
-        <!-- Georgia Tech -->
         <div class="cv-entry">
           <div class="cv-entry-header">
             <div>
@@ -135,20 +138,97 @@
             <span class="cv-entry-date">Aug 2021 – July 2022</span>
           </div>
 
-          <p class="cv-project-label">Pediatric Mental Health Treatment Patterns</p>
+          <p class="cv-project-label">Pediatric Mental Health Treatment Project</p>
           <ul class="cv-entry-list">
-            <li>Developed data processing algorithm reducing runtime from 31 days to 4 hours for 500M+ rows of Medicaid claims data across all 50 states — enabling analysis that was previously computationally impractical</li>
-            <li>Applied statistical modeling (regression, two-sample tests, Markov renewal process) to quantify cost and treatment variations in pediatric mental health across socioeconomic background</li>
-            <li>Research published in BMC Public Health (2025): large-scale comparison of mental health diagnosis prevalence between publicly and commercially insured children</li>
-          </ul>
-
-          <p class="cv-project-label">COVID-19 Epidemiological Modeling</p>
-          <ul class="cv-entry-list">
-            <li>Collaborated with CDC and Georgia Department of Public Health on COVID-19 simulations analyzing associations between socioeconomic factors and case/hospitalization/vaccination outcomes across 159 Georgia counties</li>
-            <li>Delivered findings to mixed technical and policy audiences; results informed cruise ship and K-12 reopening policies</li>
+            <li>Developed a data-processing algorithm with Numpy and Pandas that reduced the runtime of big clinical data processing from 31 days to 4 hours</li>
+            <li>Applied regression analysis and two-sample statistical tests to study costs and variations in mental health treatment for children from different socioeconomic backgrounds in Southeastern United States</li>
+            <li>Extracted 500 millions of rows of Medicaid claims data with SQL from the Centers for Medicare and Medicaid Services (CMS) for 50 U.S. states to discover patterns in the utilization of psychotherapy services for Medicaid-insured children </li>
+            <li>Improved the efficiency of data extraction process by 200% through testing and performance evaluation </li>
+            <li>Performed data wrangling, cleaning, and merging techniques on 5-year statewide electronic health records (EHRs) with Pandas.</li>
           </ul>
         </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">Georgia Institute of Technology</h3>
+              <p class="cv-entry-subtitle">Atlanta, GA</p>
+            </div>
+          </div>
+          <div class="cv-entry-header">
+            <p class="cv-entry-role">Graduate Research Assistant</p>
+            <span class="cv-entry-date">July 2021 – August 2021</span>
+          </div>
+          <ul class="cv-entry-list">
+            <li>Conducted regression analysis and statistical tests on state of Georgia Covid-19 data from March 2020 to June 2021 to study associations between socioeconomic factors and Covid-19 cases, deaths, hospitalizations and vaccination rates</li>
+            <li>Visualized Covid-19 hotspots and trends in 159 counties in Georgia by Developing 30+ interactive maps and 50+ temporal plots with Seaborn, Matplotlib, and Plotly</li>
+            <li>Delivered scientific reports and presentations to communicate results of statistical modeling and policy implications with audience from both technical and non-technical backgrounds</li>
+
+          </ul>
+        </div>
+
       </section>
+
+      <section class="cv-section">
+        <h2 class="cv-section-title">Selected Projects</h2>
+
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">DICOM Series Preparation Tool for 3D Cardiac Modeling (Tool: Python)</h3>
+               <p class="cv-entry-subtitle">Cincinnati, OH</p>
+            </div>
+          </div>
+          <div class="cv-entry-header">
+            <span class="cv-entry-date">March 2025 – Present</span>
+          </div>
+          <ul class="cv-entry-list">
+            <li>Partnered with physicians at Cincinnati Children's Hospital Heart Institute to eliminate a manual DICOM preparation bottleneck in their 3D cardiac modeling workflow, translating clinical requirements into a Streamlit application that reduced per-case processing time from 1–2 hours to under 5 seconds across batches of 200–600 files.</li>
+            <li>Built a simple frontend and DCM processing modules in the backend. The backend module takes a folder of DICOM files with missing metadata fields and a reference DICOM, copies values of tags such as study info, modality, institution info, and patient info from the reference file to the DICOM files in the folder, and assigns new values for the series UID, series description, series number, and instance number to the DICOM files in the folder.</li>
+            <li>The app can also take a folder of JPGs and a reference DICOM file, convert the JPGs to DCM first, and then go through the same processing steps as above.</li>
+            <li>The app can also take a video file, convert it to JPG, then convert it to DCM, and go through the same processing steps as above.</li>
+            <li>The user can download the processed DCM files in a zip file, which is later used to link to an existing patient study in the Picture Archiving and Communication System (PACS).</li>
+            <li>Deployed the app to the local machines of the physicians at the Heart Institute, where it is used daily.</li>
+          </ul>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">CDC Cruise Ship Covid-19 Spread, Simulation Project (Tool: Python, R) </h3>
+               <p class="cv-entry-subtitle">Atlanta, GA</p>
+            </div>
+          </div>
+          <div class="cv-entry-header">
+            <span class="cv-entry-date">Jan2022 - April 2022</span>
+          </div>
+          <ul class="cv-entry-list">
+            <li>Launched an interactive web dashboard supported by a simulation model with R shiny to visualize Covid-19 cumulative and daily case predictions in K-12 schools in Georgia to help Georgia DPH and school decision-makers adjust Covid-19 policy in schools</li>
+            <li>Collaborating with Center for Disease Control and Prevention (CDC) Quarantine and Border Health Services (QBHS) branch on simulating the spread of Covid-19 on cruise ships to estimate the risk of cruise ship voyages with SIR model </li>
+            <li>Collaborating with Georgia Department of Public health (DPH) to simulate the spread of Covid-19 Omicron Variant in K-12 school settings </li>
+            <li>Validating Covid-19 simulation model by assessing the prediction accuracy of the model with data from Georgia public schools in the city, suburb, and rural areas</li>
+          </ul>
+        </div>
+
+        <div class="cv-entry">
+          <div class="cv-entry-header">
+            <div>
+              <h3 class="cv-entry-title">NBA Game Outcome Prediction, Machine Learning Project (Tool: Python)</h3>
+               <p class="cv-entry-subtitle">Atlanta, GA</p>
+            </div>
+          </div>
+          <div class="cv-entry-header">
+            <span class="cv-entry-date">Feb. 2021 - May 2021</span>
+          </div>
+          <ul class="cv-entry-list">
+            <li>Preprocessed data with variable transformation and missing value removal with Numpy and Pandas</li>
+            <li>Employed random forest, logistic regression, support vector machine models with Scikit-learn to show whether home court effects were different in pre-pandemic and post-pandemic games and to quantify the change in the strength of each team in each year from 2003 to 2020</li>
+            <li>Tuned models utilizing grid search cross-validation with Scikit-learn and selected the optimized model with 85% accuracy </li>
+          </ul>
+        </div>
+
+      </section>
+
 
       <!-- Publications -->
       <section class="cv-section">
@@ -161,35 +241,8 @@
           </p>
         </div>
 
-        <div class="cv-entry" style="margin-top: var(--s-4);">
-          <p class="cv-project-label">Technical Writing</p>
-          <ul class="cv-entry-list">
-            <li>The LLM Isn't the Assembly Line (Dec 2025)</li>
-            <li>There Are No Shortcuts to Production AI Systems (Sep 2025)</li>
-            <li>From "Vibe Checking" to Systematic Agent Evaluation (Jun 2025)</li>
-          </ul>
-        </div>
       </section>
 
-      <!-- Technical Skills -->
-      <section class="cv-section">
-        <h2 class="cv-section-title">Technical Skills</h2>
-
-        <div class="cv-skills-grid">
-          <div>
-            <p class="cv-skill-category">Languages & Frameworks</p>
-            <p class="cv-skill-list">Python, SQL, R | LangChain, LangGraph, DSPy | Pandas, PySpark, Scikit-learn</p>
-          </div>
-          <div>
-            <p class="cv-skill-category">AI Engineering</p>
-            <p class="cv-skill-list">Multi-Agent Architecture, RAG, Text-to-SQL, Evaluation Frameworks, Human Feedback Integration, Prompt Optimization (GEPA), Self-Correcting Agent Design</p>
-          </div>
-          <div>
-            <p class="cv-skill-category">Infrastructure</p>
-            <p class="cv-skill-list">AWS (Bedrock, Knowledge Base, S3, Athena, EC2) | Snowflake (Cortex LLM, Cortex Search, Embedding Models) | Vector Databases</p>
-          </div>
-        </div>
-      </section>
 
       <!-- Education -->
       <section class="cv-section">
@@ -211,6 +264,40 @@
           <p class="cv-entry-subtitle">B.A. International Affairs (GPA: 3.56/4.0; Cum Laude)</p>
         </div>
       </section>
+
+
+      <!-- Technical Skills -->
+      <section class="cv-section">
+        <h2 class="cv-section-title">Technical Skills</h2>
+
+        <div class="cv-skills-grid">
+          <div>
+            <p class="cv-skill-category">Programming</p>
+            <p class="cv-skill-list">Python | PySpark | SQL | Langchain | DSPy</p>
+          </div>
+          <div>
+            <p class="cv-skill-category">Agent orchestration</p>
+            <p class="cv-skill-list">Multi-agent Architecture | RAG | LLM Judge | Session & Memory Management | Tool Design | Prompt Optimization (GEPA)</p>
+          </div>
+          <div>
+            <p class="cv-skill-category">Engineering</p>
+            <p class="cv-skill-list">Snowflake Vector Databases | Bedrock Knowledge base | ETL Pipeline | FastAPI | Snowflake (Cortex LLM, Cortex Search, Embedding Models)</p>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="cv-section">
+        <h2 class="cv-section-title">Technical Writing</h2>
+        <div class="cv-entry" style="margin-top: var(--s-4);">
+          <ul class="cv-entry-list">
+            <li>The LLM Isn't the Assembly Line (Dec 2025)</li>
+            <li>There Are No Shortcuts to Production AI Systems (Sep 2025)</li>
+            <li>From "Vibe Checking" to Systematic Agent Evaluation (Jun 2025)</li>
+          </ul>
+        </div>
+      </section>
+
 
     </div>
 
