@@ -10,10 +10,7 @@ export default function CV() {
       <div className="cv-top">
         <h1 className="cv-top-name">Wanmeng<br />Liu</h1>
         <div className="cv-top-contact">
-          <span>Cincinnati, OH</span>
-          <a href="mailto:wanmeng.m.liu@gmail.com">wanmeng.m.liu@gmail.com</a>
-          <a href="https://www.linkedin.com/in/wanmengliu/" target="_blank" rel="noopener noreferrer">linkedin.com/in/wanmengliu</a>
-          <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener noreferrer">substack.com/@wanmengliu</a>
+          
         </div>
       </div>
 

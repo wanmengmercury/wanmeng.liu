@@ -9,23 +9,22 @@ export default function Home() {
     <div className="home">
       <div className="home-grid">
         <div className="home-photo-col">
-          <img src="/headshot.JPG" alt="Wanmeng Liu" className="home-photo" />
+          <img src="/headshot.jpg" alt="Wanmeng Liu" className="home-photo" />
         </div>
 
         <div className="home-about-col">
-          <h1 className="home-display-name">Wanmeng<br />Liu</h1>
-
-          <p className="home-role-tag">AI Engineer — Multi-agent Systems · Text-to-SQL · Healthcare AI</p>
+          <h1 className="home-display-name">About <br />Me</h1>
 
           <div className="home-about-body">
             <p>
-              [ Placeholder ] — add your about text here. Describe your background,
-              what drives you, and the kind of work you do best.
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tellus metus, blandit sed volutpat vitae, varius eget dolor. Vestibulum tempor magna massa. Praesent porttitor nibh id ante volutpat, et porttitor nibh rhoncus. Nullam massa leo, rutrum ac lobortis vel, porta id orci.
+              Hi, I'm Wanmeng. I'm a Senior Data Scientist on the GenAI team at the Blue Cross Blue Shield Association, where I build multi-agent systems for insurance network optimization.
             </p>
             <p>
-              [ Placeholder ] — a second paragraph about your approach, values,
-              or what you're currently focused on. Mauris molestie dignissim est ut bibendum. Donec varius dui sit amet arcu varius congue. Suspendisse nec dui faucibus arcu pharetra sollicitudin. Pellentesque pharetra maximus suscipit. Mauris sit amet congue ipsum. In hac habitasse platea dictumst. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+              I also collaborate with <a href="https://www.cincinnatichildrens.org/bio/h/sassan-hashemi" target="_blank" rel="noopener noreferrer">Dr. Sassan Hashemi</a> at Cincinnati Children's Hospital Medical Center on a clinical software tool that integrates unstructured surgical planning outputs (DICOM image series and videos) into the hospital's PACS system.
+            </p>
+
+            <p>
+              I hold an MS in Health Systems from the Georgia Institute of Technology, where I spent a year in <a href="https://www.isye.gatech.edu/users/nicoleta-serban" target="_blank" rel="noopener noreferrer">Dr. Nicoleta Serban</a>'s lab researching mental health service utilization in pediatric Medicaid populations. My focus throughout has been applied: bridging the gap between modeling and real-world deployment.
             </p>
           </div>
 

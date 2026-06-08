@@ -64,12 +64,7 @@ export default function Writing() {
         </div>
       ))}
 
-      <div className="writing-cta">
-        <p className="writing-cta-text">I write occasionally about AI engineering and the work of shipping to production.</p>
-        <a href="https://substack.com/@wanmengliu" target="_blank" rel="noopener noreferrer" className="writing-cta-link">
-          Subscribe on Substack →
-        </a>
-      </div>
+      
     </div>
   )
 }

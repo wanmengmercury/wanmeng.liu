@@ -1295,6 +1295,17 @@ img {
   line-height: 1.8;
 }
 
+.home-about-body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.home-about-body a:hover {
+  color: var(--color-text-primary);
+}
+
 .home-contact {
   display: flex;
   flex-direction: column;
