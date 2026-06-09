@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 export default function Home() {
   useEffect(() => {
-    document.title = 'Wanmeng Liu — AI Engineer'
+    document.title = 'Wanmeng Liu'
   }, [])
 
   return (
